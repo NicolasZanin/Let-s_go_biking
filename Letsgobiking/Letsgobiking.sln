@@ -5,7 +5,7 @@ VisualStudioVersion = 16.0.34301.259
 MinimumVisualStudioVersion = 10.0.40219.1
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "RoutingServer", "RoutingServer\RoutingServer.csproj", "{3BBBD399-37C3-4640-A741-0A5EC9B74147}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "PROXY", "..\..\..\..\source\repos\TPREST\TPREST\PROXY.csproj", "{E0423A00-23D1-45F5-8D53-67855BA4CA61}"
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "PROXY", "PROXY\PROXY.csproj", "{E0423A00-23D1-45F5-8D53-67855BA4CA61}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
