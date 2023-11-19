@@ -8,10 +8,11 @@
     <OutputType>Exe</OutputType>
     <RootNamespace>RoutingServer</RootNamespace>
     <AssemblyName>RoutingServer</AssemblyName>
-    <TargetFrameworkVersion>v4.8</TargetFrameworkVersion>
+    <TargetFrameworkVersion>v4.6.1</TargetFrameworkVersion>
     <FileAlignment>512</FileAlignment>
     <AutoGenerateBindingRedirects>true</AutoGenerateBindingRedirects>
     <Deterministic>true</Deterministic>
+    <TargetFrameworkProfile />
   </PropertyGroup>
   <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Debug|AnyCPU' ">
     <PlatformTarget>AnyCPU</PlatformTarget>
@@ -56,5 +57,14 @@
   <ItemGroup>
     <WCFMetadata Include="Connected Services\" />
   </ItemGroup>
+<<<<<<< HEAD
+=======
+  <ItemGroup>
+    <ProjectReference Include="..\PROXY\PROXY.csproj">
+      <Project>{e0423a00-23d1-45f5-8d53-67855ba4ca61}</Project>
+      <Name>PROXY</Name>
+    </ProjectReference>
+  </ItemGroup>
+>>>>>>> ff20fa3a6bc52730d8cebede49769b190d4dafd1
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
 </Project>

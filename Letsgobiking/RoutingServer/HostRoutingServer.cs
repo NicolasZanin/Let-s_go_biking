@@ -1,6 +1,7 @@
 ﻿using System;
 using System.ServiceModel.Description;
 using System.ServiceModel;
+using PROXY;
 
 namespace RoutingServer {
     class HostRoutingServer  {
@@ -8,7 +9,7 @@ namespace RoutingServer {
             Uri httpUrl = new Uri("http://localhost:8091/IServiceRoutingServer/ServiceRoutingServer");
 
             //Create ServiceHost
-            ServiceHost host = new ServiceHost(typeof(ServiceRoutingServer), httpUrl);
+            ServiceHost host = new ServiceHost(typeof(Proxy), httpUrl);
 
             //Add a service endpoint
             host.AddServiceEndpoint(typeof(IServiceRoutingServer), new WebHttpBinding(), "");
