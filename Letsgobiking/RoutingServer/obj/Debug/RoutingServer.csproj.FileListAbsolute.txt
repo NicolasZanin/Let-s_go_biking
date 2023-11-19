@@ -5,3 +5,7 @@ C:\Users\bobca\Documents\ProjetPolytech\Let-s_go_biking\Letsgobiking\RoutingServ
 C:\Users\bobca\Documents\ProjetPolytech\Let-s_go_biking\Letsgobiking\RoutingServer\obj\Debug\RoutingServer.csproj.CoreCompileInputs.cache
 C:\Users\bobca\Documents\ProjetPolytech\Let-s_go_biking\Letsgobiking\RoutingServer\obj\Debug\RoutingServer.exe
 C:\Users\bobca\Documents\ProjetPolytech\Let-s_go_biking\Letsgobiking\RoutingServer\obj\Debug\RoutingServer.pdb
+C:\Users\user\Desktop\TDPS6\Let-s_go_biking\Letsgobiking\RoutingServer\obj\Debug\RoutingServer.csproj.AssemblyReference.cache
+C:\Users\user\Desktop\TDPS6\Let-s_go_biking\Letsgobiking\RoutingServer\obj\Debug\RoutingServer.csproj.CoreCompileInputs.cache
+C:\Users\user\Desktop\TDPS6\Let-s_go_biking\Letsgobiking\RoutingServer\obj\Debug\RoutingServer.exe
+C:\Users\user\Desktop\TDPS6\Let-s_go_biking\Letsgobiking\RoutingServer\obj\Debug\RoutingServer.pdb

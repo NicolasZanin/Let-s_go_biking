@@ -1,17 +1,18 @@
 ﻿using System;
 using System.ServiceModel.Description;
 using System.ServiceModel;
+using PROXY;
 
 namespace RoutingServer {
     class HostRoutingServer  {
         static void Main(string[] args) { 
-            Uri httpUrl = new Uri("http://localhost:8090/IServiceRoutingServer/ServiceRoutingServer");
+            Uri httpUrl = new Uri("http://localhost:8090/IServiceProxy/ServiceProxy");
 
             //Create ServiceHost
-            ServiceHost host = new ServiceHost(typeof(ServiceRoutingServer), httpUrl);
+            ServiceHost host = new ServiceHost(typeof(Proxy), httpUrl);
 
             //Add a service endpoint
-            host.AddServiceEndpoint(typeof(IServiceRoutingServer), new WSHttpBinding(), "");
+            host.AddServiceEndpoint(typeof(IServiceProxy), new WSHttpBinding(), "");
 
             //Enable metadata exchange
             ServiceMetadataBehavior smb = new ServiceMetadataBehavior();
