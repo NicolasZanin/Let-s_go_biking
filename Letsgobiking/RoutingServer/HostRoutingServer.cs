@@ -5,13 +5,13 @@ using System.ServiceModel;
 namespace RoutingServer {
     class HostRoutingServer  {
         static void Main(string[] args) { 
-            Uri httpUrl = new Uri("http://localhost:8090/IServiceRoutingServer/ServiceRoutingServer");
+            Uri httpUrl = new Uri("http://localhost:8091/IServiceRoutingServer/ServiceRoutingServer");
 
             //Create ServiceHost
             ServiceHost host = new ServiceHost(typeof(ServiceRoutingServer), httpUrl);
 
             //Add a service endpoint
-            host.AddServiceEndpoint(typeof(IServiceRoutingServer), new WSHttpBinding(), "");
+            host.AddServiceEndpoint(typeof(IServiceRoutingServer), new WebHttpBinding(), "");
 
             //Enable metadata exchange
             ServiceMetadataBehavior smb = new ServiceMetadataBehavior();
