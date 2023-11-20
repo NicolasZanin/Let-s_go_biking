@@ -5,22 +5,9 @@ using PROXY;
 
 namespace PROXY
 {
-    public class Proxy : IServiceProxy
+    public class ServiceProxy : IServiceProxy
     {
-        private GenericProxyCache<Contrat> cache;
-
-        public Proxy()
-        {
-            cache = new GenericProxyCache<Contrat>();
-        }
-
-        static async Task Main()
-        {
-            Proxy proxy = new Proxy();
-            await proxy.Get("dublin");
-            await proxy.Get("dublin");
-            Console.ReadKey();
-        }
+        private GenericProxyCache<Contrat> cache = new GenericProxyCache<Contrat>();
 
         public async Task Get(string key)
         {

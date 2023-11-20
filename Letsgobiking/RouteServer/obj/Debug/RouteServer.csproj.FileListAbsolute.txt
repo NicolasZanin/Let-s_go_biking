@@ -1,0 +1,7 @@
+C:\Users\user\Desktop\TDPS6\Let-s_go_biking\Letsgobiking\RouteServer\bin\Debug\RouteServer.exe.config
+C:\Users\user\Desktop\TDPS6\Let-s_go_biking\Letsgobiking\RouteServer\bin\Debug\RouteServer.exe
+C:\Users\user\Desktop\TDPS6\Let-s_go_biking\Letsgobiking\RouteServer\bin\Debug\RouteServer.pdb
+C:\Users\user\Desktop\TDPS6\Let-s_go_biking\Letsgobiking\RouteServer\obj\Debug\RouteServer.csproj.AssemblyReference.cache
+C:\Users\user\Desktop\TDPS6\Let-s_go_biking\Letsgobiking\RouteServer\obj\Debug\RouteServer.csproj.CoreCompileInputs.cache
+C:\Users\user\Desktop\TDPS6\Let-s_go_biking\Letsgobiking\RouteServer\obj\Debug\RouteServer.exe
+C:\Users\user\Desktop\TDPS6\Let-s_go_biking\Letsgobiking\RouteServer\obj\Debug\RouteServer.pdb

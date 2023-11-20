@@ -82,3 +82,4 @@ C:\Users\user\Desktop\TDPS6\Let-s_go_biking\Letsgobiking\PROXY\obj\Debug\PROXY.c
 C:\Users\user\Desktop\TDPS6\Let-s_go_biking\Letsgobiking\PROXY\obj\Debug\PROXY.csproj.CopyComplete
 C:\Users\user\Desktop\TDPS6\Let-s_go_biking\Letsgobiking\PROXY\obj\Debug\TPREST.exe
 C:\Users\user\Desktop\TDPS6\Let-s_go_biking\Letsgobiking\PROXY\obj\Debug\TPREST.pdb
+C:\Users\user\Desktop\TDPS6\Let-s_go_biking\Letsgobiking\PROXY\obj\Debug\TPREST.exe.config
