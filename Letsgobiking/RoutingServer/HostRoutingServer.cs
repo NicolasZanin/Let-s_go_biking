@@ -11,7 +11,7 @@ namespace RoutingServer {
             ServiceHost host = new ServiceHost(typeof(ServiceRoutingServer), httpUrl);
 
             //Add a service endpoint
-            host.AddServiceEndpoint(typeof(IServiceRoutingServer), new WSHttpBinding(), "");
+            host.AddServiceEndpoint(typeof(IServiceRoutingServer), new BasicHttpBinding(), "");
 
             //Enable metadata exchange
             try {

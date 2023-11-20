@@ -6,10 +6,8 @@ MinimumVisualStudioVersion = 10.0.40219.1
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "PROXY", "PROXY\PROXY.csproj", "{E0423A00-23D1-45F5-8D53-67855BA4CA61}"
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "RoutingServer", "RoutingServer\RoutingServer.csproj", "{3BBBD399-37C3-4640-A741-0A5EC9B74147}"
-EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Test", "Test\Test.csproj", "{90DAB22B-A7CD-4413-A676-8984D9058D8E}"
 	ProjectSection(ProjectDependencies) = postProject
-		{3BBBD399-37C3-4640-A741-0A5EC9B74147} = {3BBBD399-37C3-4640-A741-0A5EC9B74147}
+		{E0423A00-23D1-45F5-8D53-67855BA4CA61} = {E0423A00-23D1-45F5-8D53-67855BA4CA61}
 	EndProjectSection
 EndProject
 Global
@@ -26,10 +24,6 @@ Global
 		{3BBBD399-37C3-4640-A741-0A5EC9B74147}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{3BBBD399-37C3-4640-A741-0A5EC9B74147}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{3BBBD399-37C3-4640-A741-0A5EC9B74147}.Release|Any CPU.Build.0 = Release|Any CPU
-		{90DAB22B-A7CD-4413-A676-8984D9058D8E}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
-		{90DAB22B-A7CD-4413-A676-8984D9058D8E}.Debug|Any CPU.Build.0 = Debug|Any CPU
-		{90DAB22B-A7CD-4413-A676-8984D9058D8E}.Release|Any CPU.ActiveCfg = Release|Any CPU
-		{90DAB22B-A7CD-4413-A676-8984D9058D8E}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
