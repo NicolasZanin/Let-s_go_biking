@@ -1,3 +1,4 @@
 Letsgobiking/**/Debug
-Letsgobiking/RoutingServer/obj/**
+Letsgobiking/*/obj/**
+Letsgobiking/*/bin/**
 Letsgobiking/.vs/**

@@ -3,12 +3,12 @@ using System.ServiceModel;
 
 namespace RoutingServer {
 
-    [ServiceContract(Namespace = "http://tempuri.org/")]
+    [ServiceContract()]
     public interface IServiceRoutingServer{
-        [OperationContract]
+        [OperationContract()]
         int Add(int num1, int num2);
 
-        [OperationContract]
+        [OperationContract()]
         int Substract(int num1, int num2);
 
     }

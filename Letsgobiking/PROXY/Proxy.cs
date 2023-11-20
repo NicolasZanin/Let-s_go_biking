@@ -1,29 +1,25 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Threading.Tasks;
-using PROXY;
 
 namespace PROXY
 {
     public class Proxy : IServiceProxy
     {
         private GenericProxyCache<Contrat> cache;
-
-        public Proxy()
-        {
-            cache = new GenericProxyCache<Contrat>();
-        }
-
-        static async Task Main()
+        /*static async Task Main()
         {
             Proxy proxy = new Proxy();
             await proxy.Get("dublin");
             await proxy.Get("dublin");
             Console.ReadKey();
+        }*/
+
+        public Proxy() { 
+            cache = new GenericProxyCache<Contrat>();
         }
 
-        public async Task Get(string key)
-        {
+        public async Task Get(string key) {
             Contrat contratInfo = await cache.Get(key);
 
             if (contratInfo != null)
@@ -37,8 +33,7 @@ namespace PROXY
                     Console.WriteLine(station.number);
                 }*/
             }
-            else
-            {
+            else {
                 Console.WriteLine($"Contract {key} not found in the cache.");
                 Console.ReadKey();
             }

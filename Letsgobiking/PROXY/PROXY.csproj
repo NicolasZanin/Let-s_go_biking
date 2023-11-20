@@ -53,6 +53,7 @@
       <HintPath>..\packages\System.Runtime.CompilerServices.Unsafe.6.0.0\lib\net461\System.Runtime.CompilerServices.Unsafe.dll</HintPath>
     </Reference>
     <Reference Include="System.ServiceModel" />
+    <Reference Include="System.ServiceModel.Web" />
     <Reference Include="System.Text.Encodings.Web, Version=7.0.0.0, Culture=neutral, PublicKeyToken=cc7b13ffcd2ddd51, processorArchitecture=MSIL">
       <HintPath>..\packages\System.Text.Encodings.Web.7.0.0\lib\net462\System.Text.Encodings.Web.dll</HintPath>
     </Reference>
@@ -74,6 +75,7 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="Contrat.cs" />
+    <Compile Include="HostProxy.cs" />
     <Compile Include="IServiceProxy.cs" />
     <Compile Include="Proxy - Copier.cs" />
     <Compile Include="Station.cs" />

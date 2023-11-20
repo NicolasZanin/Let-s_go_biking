@@ -1,31 +1,39 @@
 ﻿using System;
 using System.ServiceModel.Description;
 using System.ServiceModel;
-using PROXY;
 
 namespace RoutingServer {
     class HostRoutingServer  {
         static void Main(string[] args) { 
             Uri httpUrl = new Uri("http://localhost:8091/IServiceRoutingServer/ServiceRoutingServer");
-
+            
             //Create ServiceHost
-            ServiceHost host = new ServiceHost(typeof(Proxy), httpUrl);
+            ServiceHost host = new ServiceHost(typeof(ServiceRoutingServer), httpUrl);
 
             //Add a service endpoint
-            host.AddServiceEndpoint(typeof(IServiceRoutingServer), new WebHttpBinding(), "");
+            host.AddServiceEndpoint(typeof(IServiceRoutingServer), new WSHttpBinding(), "");
 
             //Enable metadata exchange
-            ServiceMetadataBehavior smb = new ServiceMetadataBehavior();
-            smb.HttpGetEnabled = true;
-            host.Description.Behaviors.Add(smb);
+            try {
+                ServiceMetadataBehavior smb = new ServiceMetadataBehavior();
+                smb.HttpGetEnabled = true;
+                host.Description.Behaviors.Add(smb);
+            }
+            catch (Exception ex)  {} // Si les métadonnées sont déjà activé
 
             //Start the Service
             host.Open();
-
+            try {
+                ServiceReference1.IServiceProxy serviceProxy = new ServiceReference1.ServiceProxyClient();
+                serviceProxy.Get("dublin");
+            }
+            catch (Exception ex) {
+                Console.WriteLine(ex.Message);
+            }
             Console.WriteLine("Service is host at " + DateTime.Now.ToString());
             Console.WriteLine("Host is running... Press <Enter> key to stop");
             Console.ReadLine();
-
+            host.Close();
         }
     }
 }
