@@ -1,9 +1,9 @@
 ﻿using System;
 using System.ServiceModel.Description;
 using System.ServiceModel;
-using System.Net.Http;
 using System.Text.Json;
 using System.Threading.Tasks;
+using ActiveMQProducer;
 
 namespace RoutingServer {
     class HostRoutingServer  {
@@ -36,6 +36,7 @@ namespace RoutingServer {
             try {
                 ServiceReference1.IServiceProxy serviceProxy = new ServiceReference1.ServiceProxyClient();
                 serviceProxy.Get("dublin");
+                Producer.envoyerMessage("Hello", "Bonjour");
             }
             catch (Exception ex) {
                 Console.WriteLine(ex.Message);
@@ -44,6 +45,8 @@ namespace RoutingServer {
             Console.WriteLine("Host is running... Press <Enter> key to stop");
             Console.WriteLine(ComputeItineraire("7.5043,43.7765", "7.2661, 43.7031", "cycling-regular"));
             Console.ReadLine();
+            
+            Producer.close();
             host.Close();
         }
     }
