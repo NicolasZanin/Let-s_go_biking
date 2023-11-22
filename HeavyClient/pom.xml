@@ -21,6 +21,11 @@
             <version>2.3.3</version>
             <type>pom</type>
         </dependency>
+        <dependency>
+            <groupId>org.apache.activemq</groupId>
+            <artifactId>activemq-client</artifactId>
+            <version>5.18.2</version>
+        </dependency>
     </dependencies>
     <build>
 

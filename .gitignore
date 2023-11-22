@@ -1,4 +1,6 @@
 Letsgobiking/**/Debug
-Letsgobiking/*/obj/**
-Letsgobiking/*/bin/**
+Letsgobiking/*/obj
+Letsgobiking/*/bin
 Letsgobiking/.vs/**
+HeavyClient/src/main/java/ws/**
+HeavyClient/.idea
