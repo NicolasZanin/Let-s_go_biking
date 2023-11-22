@@ -3,14 +3,17 @@ package t;
 import javax.jms.*;
 import org.apache.activemq.ActiveMQConnectionFactory;
 
-public class ActiveMQ {
+/**
+ * Classe pouvant lire les message de la queue de ActiveMQ
+ */
+public class ActiveMQSubscriber {
     private static Connection connectionActiveMQ;
     private static MessageConsumer messageConsumer;
 
     /**
      * Constructeur par défaut qui ne doit pas être utilisé
      */
-    private ActiveMQ() {
+    private ActiveMQSubscriber() {
         throw new IllegalArgumentException("Utility Class");
     }
 
@@ -53,7 +56,7 @@ public class ActiveMQ {
     }
 
     /**
-     * Fermer la connection vers ActiveMQ
+     * Fermer la connection vers ActiveMQSubscriber
      * @throws JMSException l'exception JMS
      */
     public static void close() throws JMSException {
