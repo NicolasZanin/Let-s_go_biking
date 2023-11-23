@@ -1,5 +1,8 @@
-﻿using System.Runtime.Serialization;
+﻿using System;
+using System.Runtime.Serialization;
 using System.ServiceModel;
+using System.Text.Json;
+using System.Threading.Tasks;
 
 namespace RoutingServer {
 
@@ -9,7 +12,7 @@ namespace RoutingServer {
         int Add(int num1, int num2);
 
         [OperationContract()]
-        int Substract(int num1, int num2);
+        Task<String> ComputeItineraire(string start, string end, string locomotion);
 
     }
 }
