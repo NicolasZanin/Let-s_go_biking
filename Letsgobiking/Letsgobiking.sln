@@ -10,6 +10,8 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "RoutingServer", "RoutingSer
 		{E0423A00-23D1-45F5-8D53-67855BA4CA61} = {E0423A00-23D1-45F5-8D53-67855BA4CA61}
 	EndProjectSection
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "ActiveMQProducer", "ActiveMQProducer\ActiveMQProducer.csproj", "{1B676AF4-C7C1-4798-898D-38A05C8D90A5}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -24,6 +26,10 @@ Global
 		{3BBBD399-37C3-4640-A741-0A5EC9B74147}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{3BBBD399-37C3-4640-A741-0A5EC9B74147}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{3BBBD399-37C3-4640-A741-0A5EC9B74147}.Release|Any CPU.Build.0 = Release|Any CPU
+		{1B676AF4-C7C1-4798-898D-38A05C8D90A5}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{1B676AF4-C7C1-4798-898D-38A05C8D90A5}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{1B676AF4-C7C1-4798-898D-38A05C8D90A5}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{1B676AF4-C7C1-4798-898D-38A05C8D90A5}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
