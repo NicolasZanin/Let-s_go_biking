@@ -40,7 +40,7 @@ namespace RoutingServer {
             }
             Console.WriteLine("Service is host at " + DateTime.Now.ToString());
             Console.WriteLine("Host is running... Press <Enter> key to stop");
-            Console.WriteLine(ComputeItineraire("7.5043,43.7765", "7.2661, 43.7031", "cycling-regular"));
+            Console.WriteLine(OpenStreetMapManager.ComputeItineraire("7.5043,43.7765", "7.2661, 43.7031", "cycling-regular"));
             Console.ReadLine();
             
             Producer.close();
