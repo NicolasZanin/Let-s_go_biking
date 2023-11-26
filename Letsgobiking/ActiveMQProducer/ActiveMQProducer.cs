@@ -3,12 +3,15 @@ using Apache.NMS;
 using Apache.NMS.ActiveMQ;
 
 namespace ActiveMQProducer {
-
     /// <summary> Cette classe permet d'utiliser ActiveMQ pour produire des messages </summary>
     public class Producer {
         private static IConnection connectionProducer;
         private static ISession sessionProducer;
         private static IDestination destinationProducer;
+
+        static void Main(String[] args){
+
+        }
 
         /// <summary> Cette méthode initialise ActiveMQ </summary>
         private static void initProducer() {

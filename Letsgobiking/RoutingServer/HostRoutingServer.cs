@@ -1,9 +1,9 @@
-﻿using System;
-using System.ServiceModel.Description;
+﻿using ActiveMQProducer;
+using System;
 using System.ServiceModel;
+using System.ServiceModel.Description;
 using System.Text.Json;
 using System.Threading.Tasks;
-using ActiveMQProducer;
 
 namespace RoutingServer {
     class HostRoutingServer  {
@@ -13,8 +13,7 @@ namespace RoutingServer {
         {
             return await OM.ComputeItineraire(start,end,locomotion);
         }
-        static async Task Main(string[] args) {
-
+        static void Main(string[] args) {
             Uri httpUrl = new Uri("http://localhost:8091/IServiceRoutingServer/ServiceRoutingServer");
             
             //Create ServiceHost
@@ -34,8 +33,6 @@ namespace RoutingServer {
             //Start the Service
             host.Open();
             try {
-                ServiceReference1.IServiceProxy serviceProxy = new ServiceReference1.ServiceProxyClient();
-                serviceProxy.Get("dublin");
                 Producer.envoyerMessage("Hello", "Bonjour");
             }
             catch (Exception ex) {

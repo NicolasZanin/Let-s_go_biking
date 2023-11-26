@@ -5,19 +5,15 @@ using System.Runtime.Serialization;
 using System.Text.Json;
 using System.Threading.Tasks;
 
-namespace PROXY
+namespace RoutingServer
 {
-    [DataContract]
-    public class Contrat
-    {
-        [DataMember]
-        public string name;
-        [DataMember]
-        public List<Station> stations;
+    [Serializable]
+    public class Contrat : ISerializable {
+        public string name { get;}
+        public List<Station> stations { get; }
 
         // Constructor making a request to JCDecaux API to get stations for the contract
-        public Contrat(string contractName)
-        {
+        public Contrat(string contractName) {
             name = contractName;
             stations = LoadStations().Result;
         }
@@ -48,9 +44,13 @@ namespace PROXY
             }
         }
 
-        public List<Station> getStations()
-        {
+        public List<Station> getStations() {
             return stations;
+        }
+
+        public void GetObjectData(SerializationInfo info, StreamingContext context) {
+            info.AddValue("name", name);
+            info.AddValue("stations", stations);
         }
     }
 }

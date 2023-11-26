@@ -9,17 +9,272 @@
 //------------------------------------------------------------------------------
 
 namespace RoutingServer.ServiceReference1 {
+    using System.Runtime.Serialization;
+    using System;
     
+    
+    [System.Diagnostics.DebuggerStepThroughAttribute()]
+    [System.CodeDom.Compiler.GeneratedCodeAttribute("System.Runtime.Serialization", "4.0.0.0")]
+    [System.Runtime.Serialization.DataContractAttribute(Name="Contrat", Namespace="http://schemas.datacontract.org/2004/07/PROXY")]
+    [System.SerializableAttribute()]
+    public partial class Contrat : object, System.Runtime.Serialization.IExtensibleDataObject, System.ComponentModel.INotifyPropertyChanged {
+        
+        [System.NonSerializedAttribute()]
+        private System.Runtime.Serialization.ExtensionDataObject extensionDataField;
+        
+        [System.Runtime.Serialization.OptionalFieldAttribute()]
+        private string nameField;
+        
+        [System.Runtime.Serialization.OptionalFieldAttribute()]
+        private RoutingServer.ServiceReference1.Station[] stationsField;
+        
+        [global::System.ComponentModel.BrowsableAttribute(false)]
+        public System.Runtime.Serialization.ExtensionDataObject ExtensionData {
+            get {
+                return this.extensionDataField;
+            }
+            set {
+                this.extensionDataField = value;
+            }
+        }
+        
+        [System.Runtime.Serialization.DataMemberAttribute()]
+        public string name {
+            get {
+                return this.nameField;
+            }
+            set {
+                if ((object.ReferenceEquals(this.nameField, value) != true)) {
+                    this.nameField = value;
+                    this.RaisePropertyChanged("name");
+                }
+            }
+        }
+        
+        [System.Runtime.Serialization.DataMemberAttribute()]
+        public RoutingServer.ServiceReference1.Station[] stations {
+            get {
+                return this.stationsField;
+            }
+            set {
+                if ((object.ReferenceEquals(this.stationsField, value) != true)) {
+                    this.stationsField = value;
+                    this.RaisePropertyChanged("stations");
+                }
+            }
+        }
+        
+        public event System.ComponentModel.PropertyChangedEventHandler PropertyChanged;
+        
+        protected void RaisePropertyChanged(string propertyName) {
+            System.ComponentModel.PropertyChangedEventHandler propertyChanged = this.PropertyChanged;
+            if ((propertyChanged != null)) {
+                propertyChanged(this, new System.ComponentModel.PropertyChangedEventArgs(propertyName));
+            }
+        }
+    }
+    
+    [System.Diagnostics.DebuggerStepThroughAttribute()]
+    [System.CodeDom.Compiler.GeneratedCodeAttribute("System.Runtime.Serialization", "4.0.0.0")]
+    [System.Runtime.Serialization.DataContractAttribute(Name="Station", Namespace="http://schemas.datacontract.org/2004/07/PROXY")]
+    [System.SerializableAttribute()]
+    public partial class Station : object, System.Runtime.Serialization.IExtensibleDataObject, System.ComponentModel.INotifyPropertyChanged {
+        
+        [System.NonSerializedAttribute()]
+        private System.Runtime.Serialization.ExtensionDataObject extensionDataField;
+        
+        [System.Runtime.Serialization.OptionalFieldAttribute()]
+        private string addressField;
+        
+        [System.Runtime.Serialization.OptionalFieldAttribute()]
+        private int availabilitiesField;
+        
+        [System.Runtime.Serialization.OptionalFieldAttribute()]
+        private string contractNameField;
+        
+        [System.Runtime.Serialization.OptionalFieldAttribute()]
+        private string nameField;
+        
+        [System.Runtime.Serialization.OptionalFieldAttribute()]
+        private int numberField;
+        
+        [System.Runtime.Serialization.OptionalFieldAttribute()]
+        private RoutingServer.ServiceReference1.Position positionField;
+        
+        [global::System.ComponentModel.BrowsableAttribute(false)]
+        public System.Runtime.Serialization.ExtensionDataObject ExtensionData {
+            get {
+                return this.extensionDataField;
+            }
+            set {
+                this.extensionDataField = value;
+            }
+        }
+        
+        [System.Runtime.Serialization.DataMemberAttribute()]
+        public string address {
+            get {
+                return this.addressField;
+            }
+            set {
+                if ((object.ReferenceEquals(this.addressField, value) != true)) {
+                    this.addressField = value;
+                    this.RaisePropertyChanged("address");
+                }
+            }
+        }
+        
+        [System.Runtime.Serialization.DataMemberAttribute()]
+        public int availabilities {
+            get {
+                return this.availabilitiesField;
+            }
+            set {
+                if ((this.availabilitiesField.Equals(value) != true)) {
+                    this.availabilitiesField = value;
+                    this.RaisePropertyChanged("availabilities");
+                }
+            }
+        }
+        
+        [System.Runtime.Serialization.DataMemberAttribute()]
+        public string contractName {
+            get {
+                return this.contractNameField;
+            }
+            set {
+                if ((object.ReferenceEquals(this.contractNameField, value) != true)) {
+                    this.contractNameField = value;
+                    this.RaisePropertyChanged("contractName");
+                }
+            }
+        }
+        
+        [System.Runtime.Serialization.DataMemberAttribute()]
+        public string name {
+            get {
+                return this.nameField;
+            }
+            set {
+                if ((object.ReferenceEquals(this.nameField, value) != true)) {
+                    this.nameField = value;
+                    this.RaisePropertyChanged("name");
+                }
+            }
+        }
+        
+        [System.Runtime.Serialization.DataMemberAttribute()]
+        public int number {
+            get {
+                return this.numberField;
+            }
+            set {
+                if ((this.numberField.Equals(value) != true)) {
+                    this.numberField = value;
+                    this.RaisePropertyChanged("number");
+                }
+            }
+        }
+        
+        [System.Runtime.Serialization.DataMemberAttribute()]
+        public RoutingServer.ServiceReference1.Position position {
+            get {
+                return this.positionField;
+            }
+            set {
+                if ((object.ReferenceEquals(this.positionField, value) != true)) {
+                    this.positionField = value;
+                    this.RaisePropertyChanged("position");
+                }
+            }
+        }
+        
+        public event System.ComponentModel.PropertyChangedEventHandler PropertyChanged;
+        
+        protected void RaisePropertyChanged(string propertyName) {
+            System.ComponentModel.PropertyChangedEventHandler propertyChanged = this.PropertyChanged;
+            if ((propertyChanged != null)) {
+                propertyChanged(this, new System.ComponentModel.PropertyChangedEventArgs(propertyName));
+            }
+        }
+    }
+    
+    [System.Diagnostics.DebuggerStepThroughAttribute()]
+    [System.CodeDom.Compiler.GeneratedCodeAttribute("System.Runtime.Serialization", "4.0.0.0")]
+    [System.Runtime.Serialization.DataContractAttribute(Name="Position", Namespace="http://schemas.datacontract.org/2004/07/PROXY")]
+    [System.SerializableAttribute()]
+    public partial class Position : object, System.Runtime.Serialization.IExtensibleDataObject, System.ComponentModel.INotifyPropertyChanged {
+        
+        [System.NonSerializedAttribute()]
+        private System.Runtime.Serialization.ExtensionDataObject extensionDataField;
+        
+        [System.Runtime.Serialization.OptionalFieldAttribute()]
+        private double latitudeField;
+        
+        [System.Runtime.Serialization.OptionalFieldAttribute()]
+        private double longitudeField;
+        
+        [global::System.ComponentModel.BrowsableAttribute(false)]
+        public System.Runtime.Serialization.ExtensionDataObject ExtensionData {
+            get {
+                return this.extensionDataField;
+            }
+            set {
+                this.extensionDataField = value;
+            }
+        }
+        
+        [System.Runtime.Serialization.DataMemberAttribute()]
+        public double latitude {
+            get {
+                return this.latitudeField;
+            }
+            set {
+                if ((this.latitudeField.Equals(value) != true)) {
+                    this.latitudeField = value;
+                    this.RaisePropertyChanged("latitude");
+                }
+            }
+        }
+        
+        [System.Runtime.Serialization.DataMemberAttribute()]
+        public double longitude {
+            get {
+                return this.longitudeField;
+            }
+            set {
+                if ((this.longitudeField.Equals(value) != true)) {
+                    this.longitudeField = value;
+                    this.RaisePropertyChanged("longitude");
+                }
+            }
+        }
+        
+        public event System.ComponentModel.PropertyChangedEventHandler PropertyChanged;
+        
+        protected void RaisePropertyChanged(string propertyName) {
+            System.ComponentModel.PropertyChangedEventHandler propertyChanged = this.PropertyChanged;
+            if ((propertyChanged != null)) {
+                propertyChanged(this, new System.ComponentModel.PropertyChangedEventArgs(propertyName));
+            }
+        }
+    }
     
     [System.CodeDom.Compiler.GeneratedCodeAttribute("System.ServiceModel", "4.0.0.0")]
     [System.ServiceModel.ServiceContractAttribute(ConfigurationName="ServiceReference1.IServiceProxy")]
     public interface IServiceProxy {
         
-        [System.ServiceModel.OperationContractAttribute(Action="http://tempuri.org/IServiceProxy/Get", ReplyAction="http://tempuri.org/IServiceProxy/GetResponse")]
-        void Get(string key);
+        [System.ServiceModel.OperationContractAttribute(Action="http://tempuri.org/IServiceProxy/GetContrat", ReplyAction="http://tempuri.org/IServiceProxy/GetContratResponse")]
+        RoutingServer.ServiceReference1.Contrat GetContrat(string name);
         
-        [System.ServiceModel.OperationContractAttribute(Action="http://tempuri.org/IServiceProxy/Get", ReplyAction="http://tempuri.org/IServiceProxy/GetResponse")]
-        System.Threading.Tasks.Task GetAsync(string key);
+        [System.ServiceModel.OperationContractAttribute(Action="http://tempuri.org/IServiceProxy/GetContrat", ReplyAction="http://tempuri.org/IServiceProxy/GetContratResponse")]
+        System.Threading.Tasks.Task<RoutingServer.ServiceReference1.Contrat> GetContratAsync(string name);
+        
+        [System.ServiceModel.OperationContractAttribute(Action="http://tempuri.org/IServiceProxy/GetNombreVelo", ReplyAction="http://tempuri.org/IServiceProxy/GetNombreVeloResponse")]
+        int GetNombreVelo(string stationNumber, string nameContract);
+        
+        [System.ServiceModel.OperationContractAttribute(Action="http://tempuri.org/IServiceProxy/GetNombreVelo", ReplyAction="http://tempuri.org/IServiceProxy/GetNombreVeloResponse")]
+        System.Threading.Tasks.Task<int> GetNombreVeloAsync(string stationNumber, string nameContract);
     }
     
     [System.CodeDom.Compiler.GeneratedCodeAttribute("System.ServiceModel", "4.0.0.0")]
@@ -49,12 +304,20 @@ namespace RoutingServer.ServiceReference1 {
                 base(binding, remoteAddress) {
         }
         
-        public void Get(string key) {
-            base.Channel.Get(key);
+        public RoutingServer.ServiceReference1.Contrat GetContrat(string name) {
+            return base.Channel.GetContrat(name);
         }
         
-        public System.Threading.Tasks.Task GetAsync(string key) {
-            return base.Channel.GetAsync(key);
+        public System.Threading.Tasks.Task<RoutingServer.ServiceReference1.Contrat> GetContratAsync(string name) {
+            return base.Channel.GetContratAsync(name);
+        }
+        
+        public int GetNombreVelo(string stationNumber, string nameContract) {
+            return base.Channel.GetNombreVelo(stationNumber, nameContract);
+        }
+        
+        public System.Threading.Tasks.Task<int> GetNombreVeloAsync(string stationNumber, string nameContract) {
+            return base.Channel.GetNombreVeloAsync(stationNumber, nameContract);
         }
     }
 }
