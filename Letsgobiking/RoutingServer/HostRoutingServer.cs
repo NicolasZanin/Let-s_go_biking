@@ -2,17 +2,16 @@
 using System;
 using System.ServiceModel;
 using System.ServiceModel.Description;
-using System.Text.Json;
 using System.Threading.Tasks;
 
 namespace RoutingServer {
     class HostRoutingServer  {
-        static OpenStreetMapManager OM = new OpenStreetMapManager();
 
-        public static async Task<JsonDocument> ComputeItineraire(string start, string end, string locomotion)
+        public static async Task<String> ComputeItineraire(string start, string end, string locomotion)
         {
-            return await OM.ComputeItineraire(start,end,locomotion);
+            return await OpenStreetMapManager.ComputeItineraire(start, end, locomotion);
         }
+
         static void Main(string[] args) {
             Uri httpUrl = new Uri("http://localhost:8091/IServiceRoutingServer/ServiceRoutingServer");
             
