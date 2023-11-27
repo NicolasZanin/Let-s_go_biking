@@ -1,4 +1,6 @@
 ﻿using System;
+using System.Collections;
+using System.Collections.Generic;
 using System.Net.Http;
 using System.Runtime.Caching;
 using System.Text.Json;
@@ -10,6 +12,21 @@ namespace PROXY {
         static readonly HttpClient client = new HttpClient();
         private static MemoryCache cache = MemoryCache.Default;
         private static DateTimeOffset dt_default = ObjectCache.InfiniteAbsoluteExpiration;
+        private static List<String> nomsContrat = new List<string>();
+
+        internal static List<Station> GetOneStationForAllContrat()
+        {
+            List<Station> res = new List<Station>();
+            foreach (String contrat in nomsContrat)
+            {
+                Contrat toadd = Get(contrat);
+                if (toadd.getStations().Count > 0)
+                {
+                    res.Add(toadd.getStations()[0]);
+                }
+            }
+            return res;
+        }
 
         public static void InitAllAsync()
         {
@@ -24,6 +41,7 @@ namespace PROXY {
                 foreach (JsonElement item in document.RootElement.EnumerateArray())
                 {
                     string nameContrat = item.GetProperty("name").GetString();
+                    nomsContrat.Add(nameContrat);
                     string country_code = item.GetProperty("country_code").GetString();
                     Contrat contrat = new Contrat(nameContrat);
                     ;

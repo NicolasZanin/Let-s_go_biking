@@ -1,4 +1,6 @@
-﻿using System.Runtime.Serialization;
+﻿using System;
+using System.Collections.Generic;
+using System.Runtime.Serialization;
 using System.ServiceModel;
 using System.Threading.Tasks;
 
@@ -12,5 +14,8 @@ namespace PROXY{
 
         [OperationContract]
         Task<int> GetNombreVelo(string stationNumber, string nameContract);
+
+        [OperationContract]
+        List<Station> GetOneStationForAllContrat();
     }
 }

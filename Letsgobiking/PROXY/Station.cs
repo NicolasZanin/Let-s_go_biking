@@ -1,4 +1,5 @@
-﻿using System.Runtime.Serialization;
+﻿using System;
+using System.Runtime.Serialization;
 
 namespace PROXY
 {
@@ -27,6 +28,11 @@ namespace PROXY
             this.address = address;
             this.position = position;
             this.availabilities = availabilities;
+        }
+
+        public String getContractName()
+        {
+            return this.contractName;
         }
     }
 

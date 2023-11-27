@@ -12,6 +12,11 @@ namespace PROXY
             return ProxyCacheContrats.Get(name);
         }
 
+        public List<Station> GetOneStationForAllContrat()
+        {
+            return ProxyCacheContrats.GetOneStationForAllContrat();
+        }
+
         public Task<int> GetNombreVelo(string stationNumber, string nameContract)
         {
             return ProxyCacheVelos.GetNombreVelos(stationNumber, nameContract);

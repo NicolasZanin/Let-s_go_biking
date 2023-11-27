@@ -39,7 +39,7 @@ namespace PROXY
                         item.GetProperty("contractName").GetString(),
                         item.GetProperty("name").GetString(),
                         item.GetProperty("address").GetString(),
-                        new Position(item.GetProperty("position").GetProperty("latitude").GetDouble(), item.GetProperty("position").GetProperty("longitude").GetDouble()),
+                        new Position(item.GetProperty("position").GetProperty("longitude").GetDouble(), item.GetProperty("position").GetProperty("latitude").GetDouble()),
                         item.GetProperty("totalStands").GetProperty("availabilities").GetProperty("bikes").GetInt32()
                         );
                     stations.Add(toAdd);

@@ -89,7 +89,7 @@ public class ItineraireViewer {
         // Display the viewer in a JFrame
         final JFrame frame = new JFrame();
         frame.setLayout(new BorderLayout());
-        String text = "Use left mouse button to pan, mouse wheel to zoom and right mouse to select";
+        String text = "Use left mouse button to pan, mouse wheel to zoom";
         frame.add(new JLabel(text), BorderLayout.NORTH);
         frame.add(mapViewer);
         frame.setSize(800, 600);

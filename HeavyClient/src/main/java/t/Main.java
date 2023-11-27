@@ -82,19 +82,20 @@ public class Main {
         ActiveMQSubscriber.close();
         exempleUtilisation();*/
 
-        /*System.out.println("Hello World! we are going to test a SOAP client written in Java");
+        System.out.println("Hello World! we are going to test a SOAP client written in Java");
         ServiceRoutingServer serviceRoutingServer = new ServiceRoutingServer();
         IServiceRoutingServer service = serviceRoutingServer.getBasicHttpBindingIServiceRoutingServer();
-
+        System.out.println(service.add(1,2));
         System.out.println("Hello World! Welcome to Let's Go Biking!");
         System.out.println("Where do you want to start?");
         Scanner sc = new Scanner(System.in);
-        String start = sc.nextLine(); //7.5043,43.7765
+        String start = "2.295865,49.890229";
 
         System.out.println("Where do you want to go?");
-        String end = sc.nextLine(); //7.2661,43.7031
+        String end = "2.30082,49.904325";
 
         String itineraire = service.computeItineraire(start, end, "cycling-regular");
+        System.out.println(itineraire);
         ItineraireViewer.showItineraire(itineraire);
     }
 

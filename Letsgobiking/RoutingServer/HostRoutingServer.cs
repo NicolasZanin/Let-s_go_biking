@@ -1,16 +1,13 @@
 ﻿using ActiveMQProducer;
+using RoutingServer.ProxyService;
 using System;
+using System.Collections.Generic;
 using System.ServiceModel;
 using System.ServiceModel.Description;
 using System.Threading.Tasks;
 
 namespace RoutingServer {
     class HostRoutingServer  {
-
-        public static async Task<String> ComputeItineraire(string start, string end, string locomotion)
-        {
-            return await OpenStreetMapManager.ComputeItineraire(start, end, locomotion);
-        }
 
         static void Main(string[] args) {
             Uri httpUrl = new Uri("http://localhost:8091/IServiceRoutingServer/ServiceRoutingServer");
@@ -39,7 +36,6 @@ namespace RoutingServer {
             }
             Console.WriteLine("Service is host at " + DateTime.Now.ToString());
             Console.WriteLine("Host is running... Press <Enter> key to stop");
-            Console.WriteLine(OpenStreetMapManager.ComputeItineraire("7.5043,43.7765", "7.2661, 43.7031", "cycling-regular"));
             Console.ReadLine();
             
             Producer.close();

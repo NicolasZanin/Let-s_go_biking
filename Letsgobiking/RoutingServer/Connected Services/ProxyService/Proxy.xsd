@@ -1,0 +1,45 @@
+<?xml version="1.0" encoding="utf-8"?>
+<xs:schema xmlns:tns="http://tempuri.org/" elementFormDefault="qualified" targetNamespace="http://tempuri.org/" xmlns:xs="http://www.w3.org/2001/XMLSchema">
+  <xs:import schemaLocation="http://localhost:8090/IProxy/Proxy?xsd=xsd2" namespace="http://schemas.datacontract.org/2004/07/PROXY" />
+  <xs:element name="GetContrat">
+    <xs:complexType>
+      <xs:sequence>
+        <xs:element minOccurs="0" name="name" nillable="true" type="xs:string" />
+      </xs:sequence>
+    </xs:complexType>
+  </xs:element>
+  <xs:element name="GetContratResponse">
+    <xs:complexType>
+      <xs:sequence>
+        <xs:element xmlns:q1="http://schemas.datacontract.org/2004/07/PROXY" minOccurs="0" name="GetContratResult" nillable="true" type="q1:Contrat" />
+      </xs:sequence>
+    </xs:complexType>
+  </xs:element>
+  <xs:element name="GetNombreVelo">
+    <xs:complexType>
+      <xs:sequence>
+        <xs:element minOccurs="0" name="stationNumber" nillable="true" type="xs:string" />
+        <xs:element minOccurs="0" name="nameContract" nillable="true" type="xs:string" />
+      </xs:sequence>
+    </xs:complexType>
+  </xs:element>
+  <xs:element name="GetNombreVeloResponse">
+    <xs:complexType>
+      <xs:sequence>
+        <xs:element minOccurs="0" name="GetNombreVeloResult" type="xs:int" />
+      </xs:sequence>
+    </xs:complexType>
+  </xs:element>
+  <xs:element name="GetOneStationForAllContrat">
+    <xs:complexType>
+      <xs:sequence />
+    </xs:complexType>
+  </xs:element>
+  <xs:element name="GetOneStationForAllContratResponse">
+    <xs:complexType>
+      <xs:sequence>
+        <xs:element xmlns:q2="http://schemas.datacontract.org/2004/07/PROXY" minOccurs="0" name="GetOneStationForAllContratResult" nillable="true" type="q2:ArrayOfStation" />
+      </xs:sequence>
+    </xs:complexType>
+  </xs:element>
+</xs:schema>

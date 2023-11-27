@@ -12,7 +12,7 @@ namespace RoutingServer {
         int Add(int num1, int num2);
 
         [OperationContract()]
-        Task<String> ComputeItineraire(string start, string end, string locomotion);
+        Task<String> ComputeItineraireAsync(string start, string end, string locomotion);
 
     }
 }
