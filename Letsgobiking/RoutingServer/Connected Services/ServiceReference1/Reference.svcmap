@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="utf-8"?>
-<ReferenceGroup xmlns:xsd="http://www.w3.org/2001/XMLSchema" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" ID="24a8156f-3ac7-4750-b162-a06d5856c5a0" xmlns="urn:schemas-microsoft-com:xml-wcfservicemap">
+<ReferenceGroup xmlns:xsd="http://www.w3.org/2001/XMLSchema" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" ID="b7d907fe-71f6-4fd9-8a1f-47e2210e3221" xmlns="urn:schemas-microsoft-com:xml-wcfservicemap">
   <ClientOptions>
     <GenerateAsynchronousMethods>false</GenerateAsynchronousMethods>
     <GenerateTaskBasedAsynchronousMethod>true</GenerateTaskBasedAsynchronousMethod>
@@ -22,9 +22,10 @@
     <MetadataSource Address="http://localhost:8090/IProxy/Proxy?wsdl" Protocol="http" SourceId="1" />
   </MetadataSources>
   <Metadata>
-    <MetadataFile FileName="Proxy.xsd" MetadataType="Schema" ID="068f232d-d3f5-464c-9ac0-b1243383684c" SourceId="1" SourceUrl="http://localhost:8090/IProxy/Proxy?xsd=xsd1" />
-    <MetadataFile FileName="Proxy.wsdl" MetadataType="Wsdl" ID="aaebae2d-11c7-4072-b884-1e36115e4f7d" SourceId="1" SourceUrl="http://localhost:8090/IProxy/Proxy?wsdl" />
-    <MetadataFile FileName="Proxy1.xsd" MetadataType="Schema" ID="451e05f0-7757-449b-99b2-24119b557378" SourceId="1" SourceUrl="http://localhost:8090/IProxy/Proxy?xsd=xsd0" />
+    <MetadataFile FileName="Proxy.xsd" MetadataType="Schema" ID="7db812a8-fb59-4ee7-a6b8-138203224f8f" SourceId="1" SourceUrl="http://localhost:8090/IProxy/Proxy?xsd=xsd1" />
+    <MetadataFile FileName="Proxy1.xsd" MetadataType="Schema" ID="bc9b317a-2ac1-40d8-bc8f-797ce2771fa8" SourceId="1" SourceUrl="http://localhost:8090/IProxy/Proxy?xsd=xsd2" />
+    <MetadataFile FileName="Proxy.wsdl" MetadataType="Wsdl" ID="9807666b-6672-4c84-a3c3-031a10cdd42a" SourceId="1" SourceUrl="http://localhost:8090/IProxy/Proxy?wsdl" />
+    <MetadataFile FileName="Proxy2.xsd" MetadataType="Schema" ID="b9dc1734-d0e2-4aef-aa8a-4951dd7a128a" SourceId="1" SourceUrl="http://localhost:8090/IProxy/Proxy?xsd=xsd0" />
   </Metadata>
   <Extensions>
     <ExtensionFile FileName="configuration91.svcinfo" Name="configuration91.svcinfo" />

@@ -7,13 +7,15 @@ namespace TPREST {
     public class HostProxy {
         static void Main(string[] args)
         {
+            ProxyCacheContrats.InitAllAsync();
+            ProxyCacheVelos.Init();
             Uri httpUrl = new Uri("http://localhost:8090/IProxy/Proxy");
 
             //Create ServiceHost
             ServiceHost host = new ServiceHost(typeof(Proxy), httpUrl);
 
             //Add a service endpoint
-            host.AddServiceEndpoint(typeof(IServiceProxy), new WSHttpBinding(), "");
+            host.AddServiceEndpoint(typeof(IServiceProxy), new BasicHttpBinding(), "");
 
             //Enable metadata exchange
             ServiceMetadataBehavior smb = new ServiceMetadataBehavior();

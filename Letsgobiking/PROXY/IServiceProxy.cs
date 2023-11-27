@@ -4,10 +4,13 @@ using System.Threading.Tasks;
 
 namespace PROXY{
 
-    [ServiceContract]
+    [ServiceContract()]
     public interface IServiceProxy
     {
         [OperationContract]
-        Task Get(string key);
+        Contrat GetContrat(string name);
+
+        [OperationContract]
+        Task<int> GetNombreVelo(string stationNumber, string nameContract);
     }
 }

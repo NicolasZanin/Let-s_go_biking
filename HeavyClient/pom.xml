@@ -51,6 +51,11 @@
             <artifactId>activemq-client</artifactId>
             <version>5.18.2</version>
         </dependency>
+        <dependency>
+            <groupId>org.json</groupId>
+            <artifactId>json</artifactId>
+            <version>20210307</version>
+        </dependency>
     </dependencies>
     <build>
 
@@ -69,7 +74,7 @@
                 </executions>
                 <configuration>
                     <wsdlUrls>
-                        <wsdlUrl>http://localhost:8091/IServiceRoutingServer/ServiceRoutingServer?wsdl</wsdlUrl>
+                        <wsdlUrl>http://localhost:8090/IProxy/Proxy?wsdl</wsdlUrl>
                     </wsdlUrls>
                     <keep>true</keep>
                     <packageName>ws.client.generated</packageName>

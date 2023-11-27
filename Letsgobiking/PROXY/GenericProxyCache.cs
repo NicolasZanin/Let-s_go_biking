@@ -52,8 +52,9 @@ namespace PROXY
             try
             {
                 Contrat newItem = new Contrat(cacheItemName);
-                newItem.stations = await newItem.LoadStations("0d238e8d9993c554ac2e5a7ce158e357f8457dbe");
-                return (T)(object)newItem;
+                //newItem.stations = await newItem.LoadStations("0d238e8d9993c554ac2e5a7ce158e357f8457dbe");
+                //return (T)(object)newItem;
+                return default(T);
             }
             catch (Exception ex)
             {

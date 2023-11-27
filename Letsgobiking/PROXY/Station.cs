@@ -1,61 +1,47 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-using System.Net.Http;
-using System.Text.Json;
+﻿using System.Runtime.Serialization;
 
 namespace PROXY
 {
 
-    using System;
-    using System.Collections.Generic;
-    using System.Net.Http;
-    using System.Text.Json;
-    using System.Threading.Tasks;
-
+    [DataContract]
     public class Station
     {
+        [DataMember]
         public int number;
+        [DataMember]
         public string contractName;
+        [DataMember]
         public string name;
-        public string addres;
+        [DataMember]
+        public string address;
+        [DataMember]
         public Position position;
-
+        [DataMember]
         public int availabilities;
 
-        public Station(
-        int number,
-        string contractName,
-        string name,
-        string address,
-        Position position,
-        int availabilities
-    )
+        public Station(int number, string contractName, string name, string address, Position position, int availabilities)
         {
             this.number = number;
             this.contractName = contractName;
             this.name = name;
-            this.addres = address;
+            this.address = address;
             this.position = position;
             this.availabilities = availabilities;
         }
-
     }
 
+    [DataContract]
     public class Position
     {
-        private double v1;
-        private double v2;
+        [DataMember]
+        private double latitude;
+        [DataMember]
+        private double longitude;
 
-        public Position(double v1, double v2)
+        public Position(double longitude, double latitude)
         {
-            this.v1 = v1;
-            this.v2 = v2;
+            this.latitude = latitude;
+            this.longitude = longitude;
         }
-
-        public double Latitude { get; set; }
-        public double Longitude { get; set; }
     }
 }
