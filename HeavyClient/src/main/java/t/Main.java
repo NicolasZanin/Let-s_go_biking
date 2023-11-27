@@ -9,6 +9,7 @@ import org.jxmapviewer.viewer.TileFactoryInfo;
 
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+import java.io.Console;
 import java.util.*;
 
 import javax.swing.JFrame;
@@ -84,7 +85,16 @@ public class Main {
         /*System.out.println("Hello World! we are going to test a SOAP client written in Java");
         ServiceRoutingServer serviceRoutingServer = new ServiceRoutingServer();
         IServiceRoutingServer service = serviceRoutingServer.getBasicHttpBindingIServiceRoutingServer();
-        String itineraire = service.computeItineraire("7.5043,43.7765", "7.2661, 43.7031", "cycling-regular");
+
+        System.out.println("Hello World! Welcome to Let's Go Biking!");
+        System.out.println("Where do you want to start?");
+        Scanner sc = new Scanner(System.in);
+        String start = sc.nextLine(); //7.5043,43.7765
+
+        System.out.println("Where do you want to go?");
+        String end = sc.nextLine(); //7.2661,43.7031
+
+        String itineraire = service.computeItineraire(start, end, "cycling-regular");
         ItineraireViewer.showItineraire(itineraire);
     }
 
