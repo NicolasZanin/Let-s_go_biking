@@ -50,5 +50,9 @@ namespace ActiveMQProducer {
             connectionProducer.Close();
             sessionProducer.Close();
         }
+
+        static void Main(string[] args)
+        {
+        }
     }
 }
