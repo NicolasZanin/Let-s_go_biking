@@ -80,7 +80,6 @@
       <DesignTime>True</DesignTime>
       <DependentUpon>Reference.svcmap</DependentUpon>
     </Compile>
-    <Compile Include="Contrat.cs" />
     <Compile Include="OpenStreetMapManager.cs" />
     <Compile Include="HostRoutingServer.cs" />
     <Compile Include="IServiceRoutingServer.cs" />
