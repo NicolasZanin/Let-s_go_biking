@@ -22,11 +22,9 @@ namespace TPREST
         public static async Task<int> GetNombreVelos(string stationNumber, string nameContract)
         {
             object objNombreVelo = cache.Get(stationNumber);
-            Console.WriteLine("test2");
             if (objNombreVelo == null)
             {
-                Console.WriteLine("test3");
-                int nombreVelo = setNewElement(stationNumber, nameContract).Result;
+                int nombreVelo = await setNewElement(stationNumber, nameContract);
                 return nombreVelo;
             }
 
@@ -37,8 +35,7 @@ namespace TPREST
         {
             using (var client = new HttpClient())
             {
-                Task<HttpResponseMessage> response2 = client.GetAsync("https://api.jcdecaux.com/vls/v3/stations/" + stationNumber + "?contract=" + nameContract + "&apiKey=0d238e8d9993c554ac2e5a7ce158e357f8457dbe");
-                HttpResponseMessage response = response2.Result;
+                HttpResponseMessage response = await client.GetAsync("https://api.jcdecaux.com/vls/v3/stations/" + stationNumber + "?contract=" + nameContract + "&apiKey=0d238e8d9993c554ac2e5a7ce158e357f8457dbe");
                 response.EnsureSuccessStatusCode();
                 Task<string> responseBody = response.Content.ReadAsStringAsync();
                 JsonDocument document = JsonDocument.Parse(responseBody.Result);
