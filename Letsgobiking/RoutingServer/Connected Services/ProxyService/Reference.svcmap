@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="utf-8"?>
-<ReferenceGroup xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:xsd="http://www.w3.org/2001/XMLSchema" ID="9bea98c4-88db-4fe9-97ed-377644de743e" xmlns="urn:schemas-microsoft-com:xml-wcfservicemap">
+<ReferenceGroup xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:xsd="http://www.w3.org/2001/XMLSchema" ID="b7ed1363-78cf-49fa-ba69-4c85bd64d791" xmlns="urn:schemas-microsoft-com:xml-wcfservicemap">
   <ClientOptions>
     <GenerateAsynchronousMethods>false</GenerateAsynchronousMethods>
     <GenerateTaskBasedAsynchronousMethod>true</GenerateTaskBasedAsynchronousMethod>
@@ -22,10 +22,10 @@
     <MetadataSource Address="http://localhost:8090/IProxy/Proxy?wsdl" Protocol="http" SourceId="1" />
   </MetadataSources>
   <Metadata>
-    <MetadataFile FileName="Proxy.xsd" MetadataType="Schema" ID="6ead1dc5-5ff5-4812-b92a-39243c593098" SourceId="1" SourceUrl="http://localhost:8090/IProxy/Proxy?xsd=xsd0" />
-    <MetadataFile FileName="Proxy.wsdl" MetadataType="Wsdl" ID="bad29a25-c80e-4258-a837-43b620c95e20" SourceId="1" SourceUrl="http://localhost:8090/IProxy/Proxy?wsdl" />
-    <MetadataFile FileName="Proxy1.xsd" MetadataType="Schema" ID="9aabd71a-d66f-4891-b6f5-6c70dfde47cf" SourceId="1" SourceUrl="http://localhost:8090/IProxy/Proxy?xsd=xsd1" />
-    <MetadataFile FileName="Proxy2.xsd" MetadataType="Schema" ID="b63c2864-8453-4693-841b-7d41fbd4db8d" SourceId="1" SourceUrl="http://localhost:8090/IProxy/Proxy?xsd=xsd2" />
+    <MetadataFile FileName="Proxy.xsd" MetadataType="Schema" ID="9aef96b0-ec92-4caa-9576-0a46ecd69eae" SourceId="1" SourceUrl="http://localhost:8090/IProxy/Proxy?xsd=xsd0" />
+    <MetadataFile FileName="Proxy.wsdl" MetadataType="Wsdl" ID="ee3ab81c-2c4b-4a3e-863c-c0e079bb97d6" SourceId="1" SourceUrl="http://localhost:8090/IProxy/Proxy?wsdl" />
+    <MetadataFile FileName="Proxy1.xsd" MetadataType="Schema" ID="0b4efc8d-0b45-4ef7-a3fc-72184a384b98" SourceId="1" SourceUrl="http://localhost:8090/IProxy/Proxy?xsd=xsd1" />
+    <MetadataFile FileName="Proxy2.xsd" MetadataType="Schema" ID="a7ce01db-78c2-47cc-bcc5-24103d614d65" SourceId="1" SourceUrl="http://localhost:8090/IProxy/Proxy?xsd=xsd2" />
   </Metadata>
   <Extensions>
     <ExtensionFile FileName="configuration91.svcinfo" Name="configuration91.svcinfo" />

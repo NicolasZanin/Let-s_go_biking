@@ -90,11 +90,11 @@ public class Main {
         System.out.println("Where do you want to start?");
         Scanner sc = new Scanner(System.in);
         String start = "2.295865,49.890229";
-
+        String Menton ="7.49754,43.774481";
         System.out.println("Where do you want to go?");
         String end = "2.30082,49.904325";
-
-        String itineraire = service.computeItineraire(start, end, "cycling-regular");
+        String Antibes = "7.125102,43.580418";
+        String itineraire = service.computeItineraire(Menton, Antibes, "cycling-regular");
         System.out.println(itineraire);
         ItineraireViewer.showItineraire(itineraire);
     }

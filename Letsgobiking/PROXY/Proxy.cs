@@ -9,6 +9,8 @@ namespace PROXY
     {
         public Contrat GetContrat(string name)
         {
+            Console.WriteLine("GROS BATARD"+name);
+            Console.WriteLine("AAAAAA" + ProxyCacheContrats.Get(name).stations);
             return ProxyCacheContrats.Get(name);
         }
 
