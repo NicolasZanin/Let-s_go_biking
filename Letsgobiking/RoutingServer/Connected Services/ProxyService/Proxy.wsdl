@@ -19,6 +19,12 @@
   <wsdl:message name="IServiceProxy_GetNombreVelo_OutputMessage">
     <wsdl:part name="parameters" element="tns:GetNombreVeloResponse" />
   </wsdl:message>
+  <wsdl:message name="IServiceProxy_GetPlaceVelo_InputMessage">
+    <wsdl:part name="parameters" element="tns:GetPlaceVelo" />
+  </wsdl:message>
+  <wsdl:message name="IServiceProxy_GetPlaceVelo_OutputMessage">
+    <wsdl:part name="parameters" element="tns:GetPlaceVeloResponse" />
+  </wsdl:message>
   <wsdl:message name="IServiceProxy_GetOneStationForAllContrat_InputMessage">
     <wsdl:part name="parameters" element="tns:GetOneStationForAllContrat" />
   </wsdl:message>
@@ -33,6 +39,10 @@
     <wsdl:operation name="GetNombreVelo">
       <wsdl:input wsaw:Action="http://tempuri.org/IServiceProxy/GetNombreVelo" message="tns:IServiceProxy_GetNombreVelo_InputMessage" />
       <wsdl:output wsaw:Action="http://tempuri.org/IServiceProxy/GetNombreVeloResponse" message="tns:IServiceProxy_GetNombreVelo_OutputMessage" />
+    </wsdl:operation>
+    <wsdl:operation name="GetPlaceVelo">
+      <wsdl:input wsaw:Action="http://tempuri.org/IServiceProxy/GetPlaceVelo" message="tns:IServiceProxy_GetPlaceVelo_InputMessage" />
+      <wsdl:output wsaw:Action="http://tempuri.org/IServiceProxy/GetPlaceVeloResponse" message="tns:IServiceProxy_GetPlaceVelo_OutputMessage" />
     </wsdl:operation>
     <wsdl:operation name="GetOneStationForAllContrat">
       <wsdl:input wsaw:Action="http://tempuri.org/IServiceProxy/GetOneStationForAllContrat" message="tns:IServiceProxy_GetOneStationForAllContrat_InputMessage" />
@@ -52,6 +62,15 @@
     </wsdl:operation>
     <wsdl:operation name="GetNombreVelo">
       <soap:operation soapAction="http://tempuri.org/IServiceProxy/GetNombreVelo" style="document" />
+      <wsdl:input>
+        <soap:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap:body use="literal" />
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="GetPlaceVelo">
+      <soap:operation soapAction="http://tempuri.org/IServiceProxy/GetPlaceVelo" style="document" />
       <wsdl:input>
         <soap:body use="literal" />
       </wsdl:input>

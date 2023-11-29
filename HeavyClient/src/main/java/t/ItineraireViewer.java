@@ -55,7 +55,7 @@ public class ItineraireViewer {
         return jsonObject;
     }
 
-    public static void showItineraire(String itineraire) {
+    public static void showItineraire(String itineraire,String color) {
         // Create a TileFactoryInfo for OpenStreetMap
         TileFactoryInfo info = new OSMTileFactoryInfo();
         DefaultTileFactory tileFactory = new DefaultTileFactory(info);
@@ -97,7 +97,7 @@ public class ItineraireViewer {
         frame.setVisible(true);
         // Create a track from the geo-positions
         List<GeoPosition> track = createTrack(itineraire);
-        RoutePainter routePainter = new RoutePainter(track);
+        RoutePainter routePainter = new RoutePainter(track,color);
 
         // Set the focus
         mapViewer.zoomToBestFit(new HashSet<GeoPosition>(track), 0.7);

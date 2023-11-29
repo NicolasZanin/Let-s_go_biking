@@ -30,6 +30,21 @@
       </xs:sequence>
     </xs:complexType>
   </xs:element>
+  <xs:element name="GetPlaceVelo">
+    <xs:complexType>
+      <xs:sequence>
+        <xs:element minOccurs="0" name="stationNumber" nillable="true" type="xs:string" />
+        <xs:element minOccurs="0" name="nameContract" nillable="true" type="xs:string" />
+      </xs:sequence>
+    </xs:complexType>
+  </xs:element>
+  <xs:element name="GetPlaceVeloResponse">
+    <xs:complexType>
+      <xs:sequence>
+        <xs:element minOccurs="0" name="GetPlaceVeloResult" type="xs:int" />
+      </xs:sequence>
+    </xs:complexType>
+  </xs:element>
   <xs:element name="GetOneStationForAllContrat">
     <xs:complexType>
       <xs:sequence />

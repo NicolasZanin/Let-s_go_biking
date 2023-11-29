@@ -28,11 +28,17 @@ public class RoutePainter implements Painter<JXMapViewer>
     /**
      * @param track the track
      */
-    public RoutePainter(List<GeoPosition> track)
+    public RoutePainter(List<GeoPosition> track,String color)
     {
         // copy the list so that changes in the 
         // original list do not have an effect here
         this.track = new ArrayList<GeoPosition>(track);
+        if(color == "RED"){
+            this.color = Color.RED;
+        }
+        if(color == "BLUE"){
+            this.color = Color.BLUE;
+        }
     }
 
     @Override

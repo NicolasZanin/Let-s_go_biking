@@ -89,14 +89,22 @@ public class Main {
         System.out.println("Hello World! Welcome to Let's Go Biking!");
         System.out.println("Where do you want to start?");
         Scanner sc = new Scanner(System.in);
-        String start = "2.295865,49.890229";
+        String start = "2.295753,49.894067";
         String Menton ="7.49754,43.774481";
         System.out.println("Where do you want to go?");
-        String end = "2.30082,49.904325";
+        String end = "2.30082,49.804325";
         String Antibes = "7.125102,43.580418";
-        String itineraire = service.computeItineraire(Menton, Antibes, "cycling-regular");
-        System.out.println(itineraire);
-        ItineraireViewer.showItineraire(itineraire);
+        ArrayOfstring itineraires = service.computeItineraire(start, Antibes, "cycling-regular");
+        List<String> itinerairesList = itineraires.getString();
+        int i = 0;
+        for (String itineraire : itinerairesList) {
+            if(i == 1){
+                ItineraireViewer.showItineraire(itineraire,"BLUE");
+            }else{
+                ItineraireViewer.showItineraire(itineraire,"RED");
+            }
+            i++;
+        }
     }
 
     /*private static void exempleUtilisation() throws InterruptedException {
