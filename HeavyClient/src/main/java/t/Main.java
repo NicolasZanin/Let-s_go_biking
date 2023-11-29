@@ -94,8 +94,9 @@ public class Main {
         System.out.println("Where do you want to go?");
         String end = "2.30082,49.904325";
         String Antibes = "7.125102,43.580418";
-        String itineraire = service.computeItineraire(Menton, Antibes, "cycling-regular");
-        System.out.println(itineraire);
+        String Paris = "2.333333,48.866667";
+        String itineraire = service.computeItineraire(Menton, Paris, "cycling-regular");
+        //System.out.println(itineraire);
         ItineraireViewer.showItineraire(itineraire);
     }
 

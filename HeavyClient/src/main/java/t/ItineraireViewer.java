@@ -8,6 +8,7 @@ import org.jxmapviewer.input.PanMouseInputListener;
 import org.jxmapviewer.painter.CompoundPainter;
 import org.jxmapviewer.painter.Painter;
 import javax.swing.event.MouseInputListener;
+import java.awt.*;
 import java.beans.PropertyChangeEvent;
 import java.io.File;
 import java.util.*;
@@ -18,7 +19,7 @@ import org.jxmapviewer.viewer.TileFactoryInfo;
 import org.jxmapviewer.viewer.DefaultWaypoint;
 import org.jxmapviewer.viewer.Waypoint;
 import org.jxmapviewer.viewer.WaypointPainter;
-import java.awt.BorderLayout;
+
 import java.beans.PropertyChangeListener;
 import javax.swing.JLabel;
 import javax.swing.WindowConstants;
@@ -28,31 +29,24 @@ import org.jxmapviewer.input.PanKeyListener;
 import org.jxmapviewer.input.ZoomMouseWheelListenerCursor;
 import java.util.Arrays;
 import java.util.HashSet;
+import java.util.List;
 import java.util.Set;
 import com.fasterxml.jackson.databind.JsonNode;
 import com.fasterxml.jackson.databind.ObjectMapper;
 
 public class ItineraireViewer {
+    private static final Color[] colors = {Color.RED, Color.BLUE, Color.GREEN};
 
-    public static ArrayList<GeoPosition> createTrack(String itineraire) {
-        ArrayList<GeoPosition> track = new ArrayList<>();
-        JSONObject obj = stringToJson(itineraire);
-        JSONArray features = obj.getJSONArray("features");
-        JSONObject temp = features.getJSONObject(0);
-        JSONObject geometry = temp.getJSONObject("geometry");
-        JSONArray coordinates = geometry.getJSONArray("coordinates");
-        for (int i = 0; i < coordinates.length(); i++) {
-            JSONArray coord = coordinates.getJSONArray(i);
+    public static List<GeoPosition> createTrack(JSONArray itineraire) {
+        List<GeoPosition> track = new ArrayList<>();
+
+        for (int i = 0; i < itineraire.length(); i++) {
+            JSONArray coord = itineraire.getJSONArray(i);
             GeoPosition pos = new GeoPosition(coord.getDouble(1), coord.getDouble(0));
             track.add(pos);
         }
 
         return track;
-    }
-
-    public static JSONObject stringToJson(String jsonString){
-        JSONObject jsonObject = new JSONObject(jsonString);
-        return jsonObject;
     }
 
     public static void showItineraire(String itineraire) {
@@ -96,47 +90,63 @@ public class ItineraireViewer {
         frame.setDefaultCloseOperation(WindowConstants.EXIT_ON_CLOSE);
         frame.setVisible(true);
         // Create a track from the geo-positions
-        List<GeoPosition> track = createTrack(itineraire);
-        RoutePainter routePainter = new RoutePainter(track);
+        JSONArray jsonArray = new JSONArray(itineraire);
 
+        List<GeoPosition>[] positions = new List[jsonArray.length()];
+
+        for (int i = 0; i < jsonArray.length(); i++) {
+            positions[i] = createTrack(jsonArray.getJSONArray(i));
+        }
+
+        for (int i = 0; i < positions.length; i++) {
+            List<GeoPosition> track = positions[i];
+
+            RoutePainter routePainter = new RoutePainter(track, colors[i]);
+
+            // Create waypoints from the geo-positions
+            Set<Waypoint> waypoints = new HashSet<Waypoint>(Arrays.asList(
+                    new DefaultWaypoint(track.get(0)),
+                    new DefaultWaypoint(track.get(track.size() - 1))));
+
+            // Create a waypoint painter that takes all the waypoints
+            WaypointPainter<Waypoint> waypointPainter = new WaypointPainter<Waypoint>();
+            waypointPainter.setWaypoints(waypoints);
+
+            // Create a compound painter that uses both the route-painter and the waypoint-painter
+            List<Painter<JXMapViewer>> painters = new ArrayList<Painter<JXMapViewer>>();
+            painters.add(routePainter);
+            painters.add(waypointPainter);
+
+            CompoundPainter<JXMapViewer> painter = new CompoundPainter<JXMapViewer>(painters);
+            mapViewer.setOverlayPainter(painter);
+            mapViewer.addPropertyChangeListener("zoom", new PropertyChangeListener() {
+                @Override
+                public void propertyChange(PropertyChangeEvent evt) {
+                    updateWindowTitle(frame, mapViewer);
+                }
+            });
+
+            mapViewer.addPropertyChangeListener("center", new PropertyChangeListener() {
+                @Override
+                public void propertyChange(PropertyChangeEvent evt) {
+                    updateWindowTitle(frame, mapViewer);
+                }
+            });
+
+            updateWindowTitle(frame, mapViewer);
+        }
         // Set the focus
-        mapViewer.zoomToBestFit(new HashSet<GeoPosition>(track), 0.7);
+        mapViewer.zoomToBestFit(new HashSet<GeoPosition>(setDePosition(positions)), 0.7);
+    }
 
-        // Create waypoints from the geo-positions
-        Set<Waypoint> waypoints = new HashSet<Waypoint>(Arrays.asList(
-                new DefaultWaypoint(track.get(0)),
-                new DefaultWaypoint(track.get(track.size()-1))));
+    private static Set<GeoPosition> setDePosition(List<GeoPosition>[] list) {
+        Set<GeoPosition> set = new HashSet<>();
 
-        // Create a waypoint painter that takes all the waypoints
-        WaypointPainter<Waypoint> waypointPainter = new WaypointPainter<Waypoint>();
-        waypointPainter.setWaypoints(waypoints);
+        for (int i = 0; i < list.length; i++) {
+            set.addAll(list[i]);
+        }
 
-        // Create a compound painter that uses both the route-painter and the waypoint-painter
-        List<Painter<JXMapViewer>> painters = new ArrayList<Painter<JXMapViewer>>();
-        painters.add(routePainter);
-        painters.add(waypointPainter);
-
-        CompoundPainter<JXMapViewer> painter = new CompoundPainter<JXMapViewer>(painters);
-        mapViewer.setOverlayPainter(painter);
-        mapViewer.addPropertyChangeListener("zoom", new PropertyChangeListener()
-        {
-            @Override
-            public void propertyChange(PropertyChangeEvent evt)
-            {
-                updateWindowTitle(frame, mapViewer);
-            }
-        });
-
-        mapViewer.addPropertyChangeListener("center", new PropertyChangeListener()
-        {
-            @Override
-            public void propertyChange(PropertyChangeEvent evt)
-            {
-                updateWindowTitle(frame, mapViewer);
-            }
-        });
-
-        updateWindowTitle(frame, mapViewer);
+        return set;
     }
 
     protected static void updateWindowTitle(JFrame frame, JXMapViewer mapViewer)
