@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Net.Http;
 using System.Runtime.Caching;
+using System.Runtime.Serialization;
 using System.Text.Json;
 using System.Threading.Tasks;
 
@@ -21,17 +22,33 @@ namespace TPREST
 
         public static async Task<int> GetNombreVelos(string stationNumber, string nameContract)
         {
-            object objNombreVelo = cache.Get(stationNumber);
+            stationAvailabilities objNombreVelo = (stationAvailabilities)cache.Get(stationNumber);
             if (objNombreVelo == null)
             {
-                int nombreVelo = await setNewElement(stationNumber, nameContract);
-                return nombreVelo;
+                stationAvailabilities availabilities = await setNewElement(stationNumber, nameContract);
+                return availabilities.getVelo();
             }
 
-            return (int)objNombreVelo;
+            return objNombreVelo.getVelo();
         }
 
-        private static async Task<int> setNewElement(string stationNumber, string nameContract)
+        public static async Task<int> GetPlaceVelos(string stationNumber, string nameContract)
+        {
+
+            stationAvailabilities objPlaceVelo = (stationAvailabilities)cache.Get(stationNumber);
+
+            if (objPlaceVelo == null)
+            {
+
+                stationAvailabilities availabilities = await setNewElement(stationNumber, nameContract);
+
+                return availabilities.getPlace();
+            }
+
+            return objPlaceVelo.getPlace();
+        }
+
+        private static async Task<stationAvailabilities> setNewElement(string stationNumber, string nameContract)
         {
             using (var client = new HttpClient())
             {
@@ -39,14 +56,35 @@ namespace TPREST
                 response.EnsureSuccessStatusCode();
                 Task<string> responseBody = response.Content.ReadAsStringAsync();
                 JsonDocument document = JsonDocument.Parse(responseBody.Result);
-                JsonElement json = document.RootElement.GetProperty("totalStands").GetProperty("availabilities").GetProperty("bikes");
-                int nombreVelo = json.GetInt32();
+                JsonElement jsonBikes = document.RootElement.GetProperty("totalStands").GetProperty("availabilities").GetProperty("bikes");
+                JsonElement jsonPlace = document.RootElement.GetProperty("totalStands").GetProperty("availabilities").GetProperty("stands");
+                int nombreVelo = jsonBikes.GetInt32();
+                int nombrePlace = jsonPlace.GetInt32();
+                stationAvailabilities toAdd = new stationAvailabilities(nombreVelo, nombrePlace);
                 DateTime date = DateTime.Now;
                 date = date.AddMinutes(2);
-                cache.Set(stationNumber, nombreVelo, date);
+                cache.Set(stationNumber, toAdd, date);
 
-                return nombreVelo;
+                return toAdd;
             }
         }
+    }
+    [DataContract]
+    public class stationAvailabilities
+    {
+        [DataMember]
+        private int veloDispo;
+        [DataMember]
+        private int placeDispo;
+
+        public stationAvailabilities(int veloDispo, int placeDispo)
+        {
+            this.veloDispo = veloDispo;
+            this.placeDispo = placeDispo;
+        }
+
+        public int getPlace() { return this.placeDispo; }
+        public int getVelo() { return this.veloDispo; }
+
     }
 }

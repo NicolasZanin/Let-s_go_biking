@@ -57,9 +57,11 @@ namespace PROXY {
 
         public static Contrat Get(string cacheItemName)
         {
-            Console.WriteLine("GROS BATARD2" + cacheItemName);
+            Console.WriteLine("tttt");
+
             Contrat test = (Contrat) cache.Get(cacheItemName);
-            Console.WriteLine("DHF" + test.stations.Count);
+            Console.WriteLine("azzaz");
+
             return test;
 
         }

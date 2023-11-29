@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Collections.Generic;
 using System.Runtime.Serialization;
 using System.ServiceModel;
 using System.Text.Json;
@@ -12,7 +13,7 @@ namespace RoutingServer {
         int Add(int num1, int num2);
 
         [OperationContract()]
-        Task<String> ComputeItineraireAsync(string start, string end, string locomotion);
+        Task<List<String>> ComputeItineraireAsync(string start, string end, string locomotion);
 
     }
 }

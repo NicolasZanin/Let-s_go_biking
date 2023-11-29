@@ -276,6 +276,12 @@ namespace RoutingServer.ProxyService {
         [System.ServiceModel.OperationContractAttribute(Action="http://tempuri.org/IServiceProxy/GetNombreVelo", ReplyAction="http://tempuri.org/IServiceProxy/GetNombreVeloResponse")]
         System.Threading.Tasks.Task<int> GetNombreVeloAsync(string stationNumber, string nameContract);
         
+        [System.ServiceModel.OperationContractAttribute(Action="http://tempuri.org/IServiceProxy/GetPlaceVelo", ReplyAction="http://tempuri.org/IServiceProxy/GetPlaceVeloResponse")]
+        int GetPlaceVelo(string stationNumber, string nameContract);
+        
+        [System.ServiceModel.OperationContractAttribute(Action="http://tempuri.org/IServiceProxy/GetPlaceVelo", ReplyAction="http://tempuri.org/IServiceProxy/GetPlaceVeloResponse")]
+        System.Threading.Tasks.Task<int> GetPlaceVeloAsync(string stationNumber, string nameContract);
+        
         [System.ServiceModel.OperationContractAttribute(Action="http://tempuri.org/IServiceProxy/GetOneStationForAllContrat", ReplyAction="http://tempuri.org/IServiceProxy/GetOneStationForAllContratResponse")]
         RoutingServer.ProxyService.Station[] GetOneStationForAllContrat();
         
@@ -324,6 +330,14 @@ namespace RoutingServer.ProxyService {
         
         public System.Threading.Tasks.Task<int> GetNombreVeloAsync(string stationNumber, string nameContract) {
             return base.Channel.GetNombreVeloAsync(stationNumber, nameContract);
+        }
+        
+        public int GetPlaceVelo(string stationNumber, string nameContract) {
+            return base.Channel.GetPlaceVelo(stationNumber, nameContract);
+        }
+        
+        public System.Threading.Tasks.Task<int> GetPlaceVeloAsync(string stationNumber, string nameContract) {
+            return base.Channel.GetPlaceVeloAsync(stationNumber, nameContract);
         }
         
         public RoutingServer.ProxyService.Station[] GetOneStationForAllContrat() {

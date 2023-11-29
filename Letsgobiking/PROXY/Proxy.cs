@@ -9,9 +9,11 @@ namespace PROXY
     {
         public Contrat GetContrat(string name)
         {
-            Console.WriteLine("GROS BATARD"+name);
-            Console.WriteLine("AAAAAA" + ProxyCacheContrats.Get(name).stations);
+            Console.WriteLine("BBBB");
+            Console.WriteLine(ProxyCacheContrats.Get(name));
+
             return ProxyCacheContrats.Get(name);
+
         }
 
         public List<Station> GetOneStationForAllContrat()
@@ -22,6 +24,11 @@ namespace PROXY
         public Task<int> GetNombreVelo(string stationNumber, string nameContract)
         {
             return ProxyCacheVelos.GetNombreVelos(stationNumber, nameContract);
+        }
+
+        public Task<int> GetPlaceVelo(string stationNumber, string nameContract)
+        {
+            return ProxyCacheVelos.GetPlaceVelos(stationNumber, nameContract);
         }
     }
 }

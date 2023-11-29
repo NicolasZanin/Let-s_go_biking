@@ -16,6 +16,9 @@ namespace PROXY{
         Task<int> GetNombreVelo(string stationNumber, string nameContract);
 
         [OperationContract]
+        Task<int> GetPlaceVelo(string stationNumber, string nameContract);
+
+        [OperationContract]
         List<Station> GetOneStationForAllContrat();
     }
 }

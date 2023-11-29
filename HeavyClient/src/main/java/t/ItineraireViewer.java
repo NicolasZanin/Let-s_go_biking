@@ -50,6 +50,8 @@ public class ItineraireViewer {
     }
 
     public static void showItineraire(String itineraire) {
+
+    // public static void showItineraire(String itineraire,String color) {
         // Create a TileFactoryInfo for OpenStreetMap
         TileFactoryInfo info = new OSMTileFactoryInfo();
         DefaultTileFactory tileFactory = new DefaultTileFactory(info);
@@ -90,8 +92,8 @@ public class ItineraireViewer {
         frame.setDefaultCloseOperation(WindowConstants.EXIT_ON_CLOSE);
         frame.setVisible(true);
         // Create a track from the geo-positions
-        JSONArray jsonArray = new JSONArray(itineraire);
 
+        JSONArray jsonArray = new JSONArray(itineraire);
         List<GeoPosition>[] positions = new List[jsonArray.length()];
 
         for (int i = 0; i < jsonArray.length(); i++) {
