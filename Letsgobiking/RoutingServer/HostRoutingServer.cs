@@ -4,12 +4,13 @@ using System;
 using System.Collections.Generic;
 using System.ServiceModel;
 using System.ServiceModel.Description;
+using System.Text.Json;
 using System.Threading.Tasks;
 
 namespace RoutingServer {
     class HostRoutingServer  {
 
-        static void Main(string[] args) {
+        static async Task Main(string[] args) {
             Uri httpUrl = new Uri("http://localhost:8091/IServiceRoutingServer/ServiceRoutingServer");
             
             //Create ServiceHost
