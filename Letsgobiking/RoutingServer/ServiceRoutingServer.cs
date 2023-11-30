@@ -41,7 +41,7 @@ namespace RoutingServer {
             Console.WriteLine("NEARESTSTATION2");
 
             Double distanceStartToStation1 = await OpenStreetMapManager.getDistanceAsync(coordinatesStart, startCoordNearestStation, "foot-walking");
-            Double distanceStation1to2 = await OpenStreetMapManager.getDistanceAsync(startCoordNearestStation, endCoordNearestStation, "cycling-regular");
+            Double distanceStation1to2 = await OpenStreetMapManager.getDistanceAsync(startCoordNearestStation, endCoordNearestStation, "cycling-road");
             Double distanceStation2ToEnd = await OpenStreetMapManager.getDistanceAsync(endCoordNearestStation, coordinatesEnd, "foot-walking");
             
             Double distanceByFoot = distanceStartToStation1 + distanceStation2ToEnd;
@@ -132,14 +132,10 @@ namespace RoutingServer {
         private static async Task<List<string>> findNearestStationsAsync(string coordinatesStart, string contrat,Boolean onBike)
         {
             List<(string stationCoord, double distance)> nearestStations = new List<(string stationCoord, double distance)>();
-            Console.WriteLine("AAAA");
-
             Contrat getContrat = proxyService.GetContrat(contrat);
             Station[] listeStations = getContrat.stations;
-            Console.WriteLine("DAIM");
             foreach (Station station in listeStations)
             {
-                Console.WriteLine("tac");
 
                 String stationNumber = station.number.ToString();
                 if (onBike)
