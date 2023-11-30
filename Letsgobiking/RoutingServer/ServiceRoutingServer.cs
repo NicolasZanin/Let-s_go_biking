@@ -95,10 +95,8 @@ namespace RoutingServer {
 
             Contrat getContrat = proxyService.GetContrat(contrat);
             Station[] listeStations = getContrat.stations;
-            Console.WriteLine("DAIM");
             foreach (Station station in listeStations)
             {
-                Console.WriteLine("tac");
 
                 String stationNumber = station.number.ToString();
                 if (onBike)

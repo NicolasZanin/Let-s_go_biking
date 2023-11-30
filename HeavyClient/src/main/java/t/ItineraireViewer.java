@@ -44,7 +44,7 @@ public class ItineraireViewer {
         return track;
     }
 
-    public static void showItineraire(String itineraire, Color color) {
+    public static void showItineraire(List<String> itineraires) {
         // Create a TileFactoryInfo for OpenStreetMap
         TileFactoryInfo info = new OSMTileFactoryInfo();
         DefaultTileFactory tileFactory = new DefaultTileFactory(info);
@@ -86,15 +86,40 @@ public class ItineraireViewer {
         frame.setVisible(true);
 
         // Create a track from the geo-positions
+        List<List<GeoPosition>> tracks = new ArrayList<>();
+        List<GeoPosition> track0 = createTrack(new JSONArray(itineraires.get(0)));
+        tracks.add(track0);
 
-        List<GeoPosition> track = createTrack(new JSONArray(itineraire));
+        List<GeoPosition> track1 = new ArrayList<>();
+        List<GeoPosition> track2 = new ArrayList<>();
+        if (itineraires.size() > 1) {
+            track1 = createTrack(new JSONArray(itineraires.get(1)));
+            track2 = createTrack(new JSONArray(itineraires.get(2)));
+            // Add tracks to the list
+            tracks.add(track1);
+            tracks.add(track2);
+        }
 
-        RoutePainter routePainter = new RoutePainter(track, color);
+        RoutePainter routePainter0 = new RoutePainter(track0, "RED");
+        RoutePainter routePainter1 = new RoutePainter(track1, "BLUE");  // Use track1
+        RoutePainter routePainter2 = new RoutePainter(track2, "RED");   // Use track2
 
-        // Create waypoints from the geo-positions
-        Set<Waypoint> waypoints = new HashSet<>(Arrays.asList(
-                new DefaultWaypoint(track.get(0)),
-                new DefaultWaypoint(track.get(track.size() - 1))));
+// Set the focus
+        HashSet<GeoPosition> allTracks = new HashSet<>();
+        allTracks.addAll(track0);
+        allTracks.addAll(track1);
+        allTracks.addAll(track2);
+        mapViewer.zoomToBestFit(allTracks, 0.7);
+
+// Create waypoints from the geo-positions
+        Set<Waypoint> waypoints = new HashSet<>();
+        for (List<GeoPosition> track : tracks) {
+            Set<Waypoint> waypointsX = new HashSet<>(Arrays.asList(
+                    new DefaultWaypoint(track.get(0)),
+                    new DefaultWaypoint(track.get(track.size() - 1))));
+            waypoints.addAll(waypointsX);
+        }
+
 
         // Create a waypoint painter that takes all the waypoints
         WaypointPainter<Waypoint> waypointPainter = new WaypointPainter<>();
@@ -102,7 +127,9 @@ public class ItineraireViewer {
 
         // Create a compound painter that uses both the route-painter and the waypoint-painter
         List<Painter<JXMapViewer>> painters = new ArrayList<>();
-        painters.add(routePainter);
+        painters.add(routePainter0);
+        painters.add(routePainter1);
+        painters.add(routePainter2);
         painters.add(waypointPainter);
 
         CompoundPainter<JXMapViewer> painter = new CompoundPainter<>(painters);
@@ -114,7 +141,7 @@ public class ItineraireViewer {
         updateWindowTitle(frame, mapViewer);
         // Set the focus
 
-        mapViewer.zoomToBestFit(new HashSet<>(track), 0.7);
+        mapViewer.zoomToBestFit(allTracks, 0.7);
     }
 
     protected static void updateWindowTitle(JFrame frame, JXMapViewer mapViewer)
