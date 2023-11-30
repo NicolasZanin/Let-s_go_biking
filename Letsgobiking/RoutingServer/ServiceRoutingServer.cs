@@ -2,12 +2,7 @@
 using System;
 using System.Collections.Generic;
 using System.Linq;
-using System.Net;
 using System.Net.Http;
-using System.Runtime.Serialization;
-using System.ServiceModel;
-using System.Text;
-using System.Text.Json;
 using System.Threading.Tasks;
 
 namespace RoutingServer { 
@@ -22,41 +17,10 @@ namespace RoutingServer {
 
         public async Task<List<string>> ComputeItineraireAsync(string coordinatesStart, string coordinatesEnd, string locomotion)
         {
-            return await OpenStreetMapManager.ComputeItineraire(coordinatesStart, coordinatesEnd, locomotion, 0);
+            return await OpenStreetMapManager.ComputeItineraire(coordinatesStart, coordinatesEnd, locomotion);
             // call OSM adresse -> coordonnées //ZAZIN
             //Active MQ divisé en étapes //ZAZIN
 
-            List<string> res = new List<string>();
-
-
-            // trouve sation la plus proche avec des vélos Debut et arrivé
-            String startNearestContrat = await findNearestContratAsync(coordinatesStart);
-            String endNearestContrat = await findNearestContratAsync(coordinatesEnd);
-            Console.WriteLine("CONTRAT");
-            Boolean onBike = false;
-            String startCoordNearestStation = await findNearestStationAsync(coordinatesStart,startNearestContrat, onBike);
-            Console.WriteLine("NEARESTSTATION");
-            onBike = true;
-            String endCoordNearestStation = await findNearestStationAsync(coordinatesEnd, endNearestContrat, onBike);
-            Console.WriteLine("NEARESTSTATION2");
-
-            Double distanceStartToStation1 = await OpenStreetMapManager.getDistanceAsync(coordinatesStart, startCoordNearestStation, "foot-walking");
-            Double distanceStation1to2 = await OpenStreetMapManager.getDistanceAsync(startCoordNearestStation, endCoordNearestStation, "cycling-regular");
-            Double distanceStation2ToEnd = await OpenStreetMapManager.getDistanceAsync(endCoordNearestStation, coordinatesEnd, "foot-walking");
-            
-            Double distanceByFoot = distanceStartToStation1 + distanceStation2ToEnd;
-            Double distanceAllFoot = await OpenStreetMapManager.getDistanceAsync(coordinatesStart, coordinatesEnd, "foot-walking");
-
-            // call OSM si distance pied debut fin plus petite que à station
-            if(distanceAllFoot <= distanceByFoot)
-            {
-                //si ça vaut pas le coup start end de base locomotion walking
-                res.Add(await OpenStreetMapManager.ComputeItineraire(coordinatesStart, coordinatesEnd, "foot-walking"));
-                return res;
-            }
-            // sinon itinéraire OSM deput sation 1 à pied
-            // OSM station 1 à station 2 velo
-            //OSM station 2 end à pied
             //retourner la liste des 3 itinéraire //ZAZIN
             // Essayer de stocker dans OSMManager les Trajets de getDistance au lieu de refaire avec ComputeItinéraire //ZAZIN
         }
@@ -94,17 +58,17 @@ namespace RoutingServer {
             return res;
         }
 
-        private static async Task<string> findNearestStationAsync(string coordinates, string contrat, Boolean onBike)
+        public static async Task<InformationStation> findNearestStationAsync(string coordinates, string contrat, Boolean onBike)
         {
             double distance = double.MaxValue;
-            String res = null;
-            List<string> listeStations = await findNearestStationsAsync(coordinates, contrat, onBike);
+            InformationStation res = null;
+            List<InformationStation> listeStations = await findNearestStationsAsync(coordinates, contrat, onBike);
             Console.WriteLine("findNearestStationsAsync");
-            foreach (String station in listeStations)
+            foreach (InformationStation station in listeStations)
             {
                 try
                 {
-                    double newDistance = await OpenStreetMapManager.getDistanceAsync(coordinates, station, "foot-walking");
+                    double newDistance = await OpenStreetMapManager.getDistanceAsync(coordinates, station.coordonnes, "foot-walking");
                     if (newDistance < distance)
                     {
                         distance = newDistance;
@@ -124,9 +88,9 @@ namespace RoutingServer {
             return res;
         }
 
-        private static async Task<List<string>> findNearestStationsAsync(string coordinatesStart, string contrat,Boolean onBike)
+        private static async Task<List<InformationStation>> findNearestStationsAsync(string coordinatesStart, string contrat,bool onBike)
         {
-            List<(string stationCoord, double distance)> nearestStations = new List<(string stationCoord, double distance)>();
+            List<(InformationStation informationStation, double distance)> nearestStations = new List<(InformationStation informationStation, double distance)>();
             Console.WriteLine("AAAA");
 
             Contrat getContrat = proxyService.GetContrat(contrat);
@@ -152,13 +116,15 @@ namespace RoutingServer {
 
                 string station1CoordLongitude = station.position.longitude.ToString().Replace(",", ".");
                 string station1CoordLatitude = station.position.latitude.ToString().Replace(",", ".");
-                String station1Coord = station1CoordLongitude + "," + station1CoordLatitude;
+                string station1Coord = station1CoordLongitude + "," + station1CoordLatitude;
                 try
                 {
                     double newDistance = CalculateEuclideanDistance(coordinatesStart, station1Coord); //await OpenStreetMapManager.getDistanceAsync(coordinatesStart, station1Coord, "foot-walking");
                     if (nearestStations.Count < 5)
                     {
-                        nearestStations.Add((station1Coord, newDistance));
+                        
+                        nearestStations.Add((new InformationStation(station1Coord, station.contractName, station.number.ToString()), 
+                            newDistance));
                     }
                     else
                     {
@@ -167,7 +133,8 @@ namespace RoutingServer {
                         // Remplacement de la station avec la plus grande distance si la nouvelle distance est plus petite
                         if (newDistance < nearestStations[4].distance)
                         {
-                            nearestStations[4] = (station1Coord, newDistance);
+                            nearestStations[4] = (new InformationStation(station1Coord, station.contractName, station.number.ToString()),
+                                newDistance);
                         }
                     }
                 }
@@ -185,9 +152,15 @@ namespace RoutingServer {
             Console.WriteLine("HERE : 7");
 
             nearestStations.Sort((s1, s2) => s1.distance.CompareTo(s2.distance));
-            Console.WriteLine("Resultat : " + nearestStations.Select(s => s.stationCoord).ToList());
+            Console.WriteLine("Resultat : " + nearestStations.Select(s => s.informationStation).ToList());
+            for(int i = 0; i < 5; i++)
+            {
+                Console.WriteLine(nearestStations[i].informationStation.nomContract);
+                Console.WriteLine(nearestStations[i].informationStation.numeroStation);
+                Console.WriteLine(nearestStations[i].informationStation.coordonnes);
+            }
             // Retourner une liste des coordonnées des 5 stations les plus proches
-            return nearestStations.Select(s => s.stationCoord).ToList();
+            return nearestStations.Select(s => s.informationStation).ToList();
         }
 
 
@@ -211,6 +184,18 @@ namespace RoutingServer {
             }
 
             throw new ArgumentException("Invalid coordinates format");
+        }
+    }
+
+    public class InformationStation  {
+        public string nomContract { get; }
+        public string numeroStation { get; }
+        public string coordonnes { get; }
+
+        public InformationStation(string coordonnes, string nomContract= null, string numeroStation = null) {
+            this.nomContract = nomContract;
+            this.numeroStation = numeroStation;
+            this.coordonnes = coordonnes;
         }
     }
 }

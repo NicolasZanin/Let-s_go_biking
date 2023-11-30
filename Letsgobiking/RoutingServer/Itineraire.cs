@@ -1,22 +1,19 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
+﻿using System.Collections.Generic;
 using System.Text.Json;
-using System.Threading.Tasks;
 
 namespace RoutingServer
 {
     public class Itineraire {
         public double distance;
-
+        public InformationStation informationStation;
         public List<JsonElement> morceauItineraire;
         public List<JsonElement> coordonnes;
 
-        public Itineraire(string itineraire) {
+        public Itineraire(string itineraire, InformationStation informationStation = null) {
             morceauItineraire = new List<JsonElement>();
             coordonnes = new List<JsonElement>();
             InitVariable(itineraire);
+            this.informationStation = informationStation;
         }
 
         private void InitVariable(string itineraire) {

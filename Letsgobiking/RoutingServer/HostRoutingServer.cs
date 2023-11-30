@@ -1,10 +1,7 @@
 ﻿using ActiveMQProducer;
-using RoutingServer.ProxyService;
 using System;
-using System.Collections.Generic;
 using System.ServiceModel;
 using System.ServiceModel.Description;
-using System.Text.Json;
 using System.Threading.Tasks;
 
 namespace RoutingServer {
@@ -29,12 +26,6 @@ namespace RoutingServer {
 
             //Start the Service
             host.Open();
-            try {
-                Producer.envoyerMessage("Hello", "Bonjour");
-            }
-            catch (Exception ex) {
-                Console.WriteLine(ex.Message);
-            }
             Console.WriteLine("Service is host at " + DateTime.Now.ToString());
             Console.WriteLine("Host is running... Press <Enter> key to stop");
             Console.ReadLine();

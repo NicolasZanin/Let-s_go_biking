@@ -1,4 +1,8 @@
 package t;
+import com.google.gson.JsonElement;
+import com.google.gson.JsonObject;
+import com.google.gson.JsonParser;
+import org.json.JSONObject;
 import ws.client.generated.*;
 import javax.swing.JFrame;
 import org.jxmapviewer.JXMapViewer;
@@ -78,10 +82,6 @@ import java.util.List;
 
 public class Main {
     public static void main(String[] args) throws JMSException, InterruptedException {
-        /*while(ActiveMQSubscriber.recevoirMessage()){ }
-        ActiveMQSubscriber.close();
-        exempleUtilisation();*/
-
         System.out.println("Hello World! we are going to test a SOAP client written in Java");
         ServiceRoutingServer serviceRoutingServer = new ServiceRoutingServer();
         IServiceRoutingServer service = serviceRoutingServer.getBasicHttpBindingIServiceRoutingServer();
@@ -95,21 +95,55 @@ public class Main {
         String end = "2.30082,49.804325";
         String Antibes = "7.125102,43.580418";
         String Paris = "2.333333,48.866667";
-        String itineraire = service.computeItineraire(Menton, Paris, "cycling-regular");
-        //System.out.println(itineraire);
-        ItineraireViewer.showItineraire(itineraire);
 
-        /*ArrayOfstring itineraires = service.computeItineraire(start, Antibes, "cycling-regular");
+        ArrayOfstring itineraires = service.computeItineraire("Menton", "Paris", "cycling-regular");
         List<String> itinerairesList = itineraires.getString();
         int i = 0;
         for (String itineraire : itinerairesList) {
-            if(i == 1){
-                ItineraireViewer.showItineraire(itineraire,"BLUE");
-            }else{
-                ItineraireViewer.showItineraire(itineraire,"RED");
+
+            switch (i) {
+                case 0: ItineraireViewer.showItineraire(itineraire, Color.RED); break;
+                case 1: ItineraireViewer.showItineraire(itineraire, Color.BLUE); break;
+                default: ItineraireViewer.showItineraire(itineraire, Color.GREEN);
             }
+
             i++;
-        }*/
+        }
+
+        boucleLecture(service);
+    }
+
+    private static void boucleLecture(IServiceRoutingServer service) throws JMSException, InterruptedException {
+        while (true) {
+            String message = ActiveMQSubscriber.recevoirMessage();
+
+            if (message == null) {
+                service.computeItineraire("", "", "cycling-regular");
+                System.out.println();
+                Thread.sleep(5000);
+                continue;
+            }
+
+            else if (message.startsWith("f") || message.startsWith("V")) {
+                System.out.println(message);
+                continue;
+            }
+
+            else if (message.startsWith("F")) {
+                System.out.println(message);
+                break;
+            }
+            try {
+                JSONObject jsonObject = new JSONObject(message);
+                String instruction = jsonObject.getString("instruction");
+                System.out.println(instruction);
+            }
+            catch (Exception e) {
+                System.err.println(e.getMessage());
+                System.err.println(message);
+            }
+        }
+        ActiveMQSubscriber.close();
     }
 
     /*private static void exempleUtilisation() throws InterruptedException {

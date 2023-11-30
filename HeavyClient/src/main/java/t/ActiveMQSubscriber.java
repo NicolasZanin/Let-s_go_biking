@@ -38,21 +38,19 @@ public class ActiveMQSubscriber {
      * @throws JMSException l'exception JMS
      * @return <code>true</code> si le message était dans la pile sinon <code>false</code>
      */
-    public static boolean recevoirMessage() throws JMSException {
+    public static String recevoirMessage() throws JMSException {
         if (connectionActiveMQ == null)
             initActiveMQSubscriber();
 
         // Recevoir le message
         Message receivedMessage = messageConsumer.receive(1000);
         if (receivedMessage == null)
-            return false;
+            return null;
 
         if (receivedMessage instanceof TextMessage textMessage)
-            System.out.println("Received: " + textMessage.getText());
+            return textMessage.getText();
         else
-            System.out.println("Received: " + receivedMessage);
-
-        return true;
+            return  receivedMessage.toString();
     }
 
     /**
