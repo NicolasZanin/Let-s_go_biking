@@ -47,6 +47,7 @@ namespace RoutingServer
                 itineraires.Clear();
                 start = await convertAddressToPointAsync(start);
                 end = await convertAddressToPointAsync(end);
+                Console.WriteLine("ok");
                 List<string> list = await ComputeItineraireEtape0(start, end);
                 EnvoiMessage(10);
                 return list;

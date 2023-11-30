@@ -111,7 +111,7 @@ public class Main {
             if (message == null) {
                 service.computeItineraire("", "", "cycling-regular");
                 System.out.println();
-                Thread.sleep(5000);
+                Thread.sleep(2000);
                 continue;
             }
 
