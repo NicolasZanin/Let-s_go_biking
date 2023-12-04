@@ -16,22 +16,7 @@ namespace RoutingServer
 
         //convertit une adresse en coordonnes avec OpenROuteService
         public static async Task<string> convertAddressToPointAsync(string address) {
-            string apiURL = "https://api.openrouteservice.org/geocode/search?api_key=5b3ce3597851110001cf6248ef43ce34eac546a6b118b6706bfe11ce&text=";
-            string[] adressSplit = address.Split(',');
-            string nameAdress = adressSplit[0];
-            apiURL += nameAdress;
-
-            if (adressSplit.Length > 1) {
-                string[] codePostalPays = adressSplit[1].Split(' ');
-
-                if (codePostalPays[0][0] >= '0' && codePostalPays[0][0] <= '9')
-                    apiURL += "&postalcode=" + codePostalPays[0];
-                
-                if (codePostalPays.Length > 1)
-                    apiURL += "&locality=" + codePostalPays[1];
-                else
-                    apiURL += "&locality=" + codePostalPays[0];
-            }
+            string apiURL = "https://api.openrouteservice.org/geocode/search?api_key=5b3ce3597851110001cf6248ef43ce34eac546a6b118b6706bfe11ce&text="+ address;
             //fait l'appel est récupère les coordonnées
             HttpClient OSMapi = new HttpClient();
             HttpResponseMessage response = await OSMapi.GetAsync(apiURL);
