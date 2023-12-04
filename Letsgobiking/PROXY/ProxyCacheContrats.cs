@@ -14,6 +14,7 @@ namespace PROXY {
         private static DateTimeOffset dt_default = ObjectCache.InfiniteAbsoluteExpiration;
         private static List<String> nomsContrat = new List<string>();
 
+        //recupére une station par contrat
         internal static List<Station> GetOneStationForAllContrat()
         {
             List<Station> res = new List<Station>();
@@ -28,6 +29,7 @@ namespace PROXY {
             return res;
         }
 
+        //recupérer toutes les stations
         public static void InitAllAsync()
         {
             try
@@ -57,11 +59,7 @@ namespace PROXY {
 
         public static Contrat Get(string cacheItemName)
         {
-            Console.WriteLine("tttt");
-
             Contrat test = (Contrat) cache.Get(cacheItemName);
-            Console.WriteLine("azzaz");
-
             return test;
 
         }

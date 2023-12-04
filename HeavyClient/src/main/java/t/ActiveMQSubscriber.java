@@ -28,7 +28,7 @@ public class ActiveMQSubscriber {
 
         Session session = connectionActiveMQ.createSession(false, Session.AUTO_ACKNOWLEDGE);
 
-        Destination destination = session.createQueue("test");
+        Destination destination = session.createQueue("itineraireQueue");
         // Créer un consommateur de messages
         messageConsumer = session.createConsumer(destination);
     }

@@ -28,7 +28,7 @@ namespace ActiveMQProducer {
             sessionProducer = connectionProducer.CreateSession();
 
             // Use the session to target a queue.
-            destinationProducer = sessionProducer.GetQueue("test");
+            destinationProducer = sessionProducer.GetQueue("itineraireQueue");
         }
 
         /// <summary> Envoie des message à la Queue de ActiveMQ </summary>

@@ -7,6 +7,7 @@ namespace TPREST {
     public class HostProxy {
         static void Main(string[] args)
         {
+            //initailisation du cache
             ProxyCacheContrats.InitAllAsync();
             ProxyCacheVelos.Init();
             Uri httpUrl = new Uri("http://localhost:8090/IProxy/Proxy");
