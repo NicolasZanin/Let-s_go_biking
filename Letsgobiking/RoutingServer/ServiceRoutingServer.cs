@@ -8,23 +8,16 @@ using System.Threading.Tasks;
 namespace RoutingServer { 
     class ServiceRoutingServer : IServiceRoutingServer
     {
-        public int Add(int num1, int num2) {
-            return num1 + num2;
-        }
 
         private static ProxyService.IServiceProxy proxyService = new ProxyService.ServiceProxyClient();
 
-
-        public async Task<List<string>> ComputeItineraireAsync(string coordinatesStart, string coordinatesEnd, string locomotion)
+        //revoie l'itinéraire global
+        public async Task<List<string>> ComputeItineraireAsync(string coordinatesStart, string coordinatesEnd)
         {
-            return await OpenStreetMapManager.ComputeItineraire(coordinatesStart, coordinatesEnd, locomotion);
-            // call OSM adresse -> coordonnées //ZAZIN
-            //Active MQ divisé en étapes //ZAZIN
-
-            //retourner la liste des 3 itinéraire //ZAZIN
-            // Essayer de stocker dans OSMManager les Trajets de getDistance au lieu de refaire avec ComputeItinéraire //ZAZIN
+            return await OpenStreetMapManager.ComputeItineraire(coordinatesStart, coordinatesEnd);
         }
 
+        //cherche le contrat les plus proche
         public static async Task<string> findNearestContratAsync(string coordinatesStart)
         {
             double distance = double.MaxValue;
@@ -58,12 +51,12 @@ namespace RoutingServer {
             return res;
         }
 
+        //trouve la station la plus proche à pied
         public static async Task<InformationStation> findNearestStationAsync(string coordinates, string contrat, Boolean onBike)
         {
             double distance = double.MaxValue;
             InformationStation res = null;
             List<InformationStation> listeStations = await findNearestStationsAsync(coordinates, contrat, onBike);
-            Console.WriteLine("findNearestStationsAsync");
             foreach (InformationStation station in listeStations)
             {
                 try
@@ -88,10 +81,10 @@ namespace RoutingServer {
             return res;
         }
 
+        //trouve les stations les plus proches à vol d'oiseau
         private static async Task<List<InformationStation>> findNearestStationsAsync(string coordinatesStart, string contrat,bool onBike)
         {
             List<(InformationStation informationStation, double distance)> nearestStations = new List<(InformationStation informationStation, double distance)>();
-            Console.WriteLine("AAAA");
 
             Contrat getContrat = proxyService.GetContrat(contrat);
             Station[] listeStations = getContrat.stations;
@@ -147,8 +140,6 @@ namespace RoutingServer {
             }
 
             // Trier la liste finale par distance croissante avant de la renvoyer
-            Console.WriteLine("HERE : 7");
-
             nearestStations.Sort((s1, s2) => s1.distance.CompareTo(s2.distance));
             Console.WriteLine("Resultat : " + nearestStations.Select(s => s.informationStation).ToList());
             for(int i = 0; i < 5; i++)

@@ -20,6 +20,7 @@ namespace TPREST
             cache = MemoryCache.Default;
         }
 
+        //récupère le nombre de vélo dispo
         public static async Task<int> GetNombreVelos(string stationNumber, string nameContract)
         {
             stationAvailabilities objNombreVelo = (stationAvailabilities)cache.Get(stationNumber);
@@ -32,6 +33,7 @@ namespace TPREST
             return objNombreVelo.getVelo();
         }
 
+        //récupère le nombre de place de dépose dispo
         public static async Task<int> GetPlaceVelos(string stationNumber, string nameContract)
         {
 
@@ -48,6 +50,7 @@ namespace TPREST
             return objPlaceVelo.getPlace();
         }
 
+        //insère les infos d'une stations dans le cache
         private static async Task<stationAvailabilities> setNewElement(string stationNumber, string nameContract)
         {
             using (var client = new HttpClient())

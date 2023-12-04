@@ -78,7 +78,6 @@
     <Compile Include="Contrat.cs" />
     <Compile Include="HostProxy.cs" />
     <Compile Include="IServiceProxy.cs" />
-    <Compile Include="Proxy - Copier.cs" />
     <Compile Include="ProxyCacheContrats.cs" />
     <Compile Include="ProxyCacheVelos.cs" />
     <Compile Include="Station.cs" />

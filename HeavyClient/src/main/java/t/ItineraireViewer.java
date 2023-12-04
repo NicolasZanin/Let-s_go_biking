@@ -32,6 +32,7 @@ import java.util.Set;
 
 public class ItineraireViewer {
 
+    // Create a track from the coordinates
     public static List<GeoPosition> createTrack(JSONArray itineraire) {
         List<GeoPosition> track = new ArrayList<>();
 
@@ -100,18 +101,16 @@ public class ItineraireViewer {
             tracks.add(track2);
         }
 
-        RoutePainter routePainter0 = new RoutePainter(track0, "RED");
-        RoutePainter routePainter1 = new RoutePainter(track1, "BLUE");  // Use track1
-        RoutePainter routePainter2 = new RoutePainter(track2, "RED");   // Use track2
+        RoutePainter routePainter0 = new RoutePainter(track0, "RED");   // in foot
+        RoutePainter routePainter1 = new RoutePainter(track1, "BLUE");  // in bike
+        RoutePainter routePainter2 = new RoutePainter(track2, "RED");   // in foot
 
-// Set the focus
         HashSet<GeoPosition> allTracks = new HashSet<>();
         allTracks.addAll(track0);
         allTracks.addAll(track1);
         allTracks.addAll(track2);
-        mapViewer.zoomToBestFit(allTracks, 0.7);
 
-// Create waypoints from the geo-positions
+        // Create waypoints from the geo-positions
         Set<Waypoint> waypoints = new HashSet<>();
         for (List<GeoPosition> track : tracks) {
             Set<Waypoint> waypointsX = new HashSet<>(Arrays.asList(
@@ -139,8 +138,7 @@ public class ItineraireViewer {
         mapViewer.addPropertyChangeListener("center", evt -> updateWindowTitle(frame, mapViewer));
 
         updateWindowTitle(frame, mapViewer);
-        // Set the focus
-
+        // Set the focus on the whole track
         mapViewer.zoomToBestFit(allTracks, 0.7);
     }
 
@@ -150,7 +148,7 @@ public class ItineraireViewer {
         double lon = mapViewer.getCenterPosition().getLongitude();
         int zoom = mapViewer.getZoom();
 
-        frame.setTitle(String.format("Let's Go Biking ! (%.2f / %.2f) - Zoom: %d", lat, lon, zoom));
+        frame.setTitle(String.format("Let's Go Biking ! (%.2f / %.2f) - RED=foot BLUE=bike", lat, lon, zoom));
     }
 
 
