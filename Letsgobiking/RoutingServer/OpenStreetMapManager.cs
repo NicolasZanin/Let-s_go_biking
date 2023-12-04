@@ -44,21 +44,26 @@ namespace RoutingServer
         //trouve les coordonées des points et calcul l'itinéraire global
         public static async Task<List<string>> ComputeItineraire(string start, string end)
         {
-            if (numeroEtapeActuel == 0) {
-                itineraires.Clear();
-                start = await convertAddressToPointAsync(start);
-                end = await convertAddressToPointAsync(end);
-                List<string> list = await ComputeItineraireGlobal(start, end);
-                SendSteps(10);
-                return list;
+            // En train de faire l'itinéraire
+            if (numeroEtapeActuel != 0 && start == "" && end == "") {
+                ComputeItineraireEtapeAsync(start, end);
+                return new List<string>();
             }
-            ComputeItineraireEtapeAsync(start, end);
-            return new List<string>();
+            
+            // Si le client à arreter le programme avant la fin du trajet
+            if (numeroEtapeActuel != 0) {
+                ReinitialiseVariable();
+            }
+
+            start = await convertAddressToPointAsync(start);
+            end = await convertAddressToPointAsync(end);
+            List<string> list = await ComputeItineraireGlobal(start, end);
+            SendSteps(10);
+            return list;        
         }
 
         //calcul l'itinéraire global
         private static async Task<List<string>> ComputeItineraireGlobal(string start, string end) {
-            numeroEtapeActuel = 0;
             List<string> list = new List<string>();
 
             // trouve la station la plus proche avec des vélos Debut et arrivé
@@ -108,7 +113,7 @@ namespace RoutingServer
 
             switch (verifVelo) {
                 case 0: SendSteps(10); break; //tout vas bien on peut continuer
-                case 1: await ComputeItineraireGlobal(await convertAddressToPointAsync(start), await convertAddressToPointAsync(end)); break; //plus de vélo dispo dans la station 1, recherche d'un nouvel itinéraire
+                case 1: ReinitialiseVariable(); await ComputeItineraireGlobal(await convertAddressToPointAsync(start), await convertAddressToPointAsync(end)); break; //plus de vélo dispo dans la station 1, recherche d'un nouvel itinéraire
                 case 2: FindNewItineraryBike(end); break; //plus de place pour déposer mon vélo, nouvelle recherche d'itinéraire 
             }
         }
@@ -145,6 +150,7 @@ namespace RoutingServer
                 {
                     list.Add("FINI");
                     ActiveMQProducer.Producer.envoyerMessage(list.ToArray());
+                    ReinitialiseVariable();
                     return;
                 }
                 //sinon c'est qu'il est temps de prendre le vélo
@@ -193,10 +199,14 @@ namespace RoutingServer
                     list.Add(JsonSerializer.Serialize(itineraires[2].morceauItineraire[i - ancienneTaille]));
 
                 if (list.Count < nombreMessage)
+                {
                     list.Add("FINI");
+                    ReinitialiseVariable();
+                }
             }
             else if (list.Count < nombreMessage) {
                 list.Add("FINI");
+                ReinitialiseVariable();
             }
 
             numeroEtapeActuel += nombreMessage;
@@ -260,6 +270,12 @@ namespace RoutingServer
             JsonDocument document = JsonDocument.Parse(responseBody);
 
             return document.RootElement.GetProperty("features")[0].GetProperty("properties").GetProperty("segments")[0].GetProperty("distance").GetDouble();
+        }
+
+        // Réinitialise les variables
+        private static void ReinitialiseVariable() {
+            itineraires.Clear();
+            numeroEtapeActuel = 0;
         }
     }
 }
