@@ -10,29 +10,46 @@ public class Main {
         IServiceRoutingServer service = serviceRoutingServer.getBasicHttpBindingIServiceRoutingServer();
 
         System.out.println("Hello World! Welcome to Let's Go Biking!");
-        System.out.println("Where do you want to start?");
-        Scanner sc = new Scanner(System.in);
-        String start = sc.nextLine();
-        System.out.println("Where do you want to go?");
-        String end = sc.nextLine();
-        System.out.println("Recherche d'itinéraire en cours...");
+        while(true) {
+            System.out.println("Where do you want to start?");
+            Scanner sc = new Scanner(System.in);
+            String start = sc.nextLine();
+            System.out.println("Where do you want to go?");
+            String end = sc.nextLine();
+            System.out.println("Recherche d'itinéraire en cours...");
+            ArrayOfstring itineraires = service.computeItineraire(start, end);
+            if (itineraires.getString().get(0).equals("Error, check your inputs")){
+                System.out.println("Votre recherche n'a pas abouti, veuillez vérifier vos entrées.");
+                continue;
+            }
+            List<String> itinerairesList = itineraires.getString();
+            ItineraireViewer itineraireViewer = new ItineraireViewer();
+            itineraireViewer.showItineraire(itinerairesList);
 
-        ArrayOfstring itineraires = service.computeItineraire(start, end);
-        List<String> itinerairesList = itineraires.getString();
-        ItineraireViewer itineraireViewer = new ItineraireViewer();
-        itineraireViewer.showItineraire(itinerairesList);
-
-        boucleLecture(service);
+            boucleLecture(service);
+        }
     }
 
     private static void boucleLecture(IServiceRoutingServer service) throws JMSException, InterruptedException {
+        System.out.println("C'est parti !");
+        boolean modeAutomatique = false;
         while (true) {
             String message = ActiveMQSubscriber.recevoirMessage();
 
             if (message == null) {
-                service.computeItineraire("", "");
+                service.computeItineraire("InProcess", "InProcess");
                 System.out.println();
-                Thread.sleep(2000);
+                if (modeAutomatique) {
+                    Thread.sleep(500);
+                }else{
+                    System.out.println("Appuyer sur Entrée pour continuer...");
+                    System.out.println("OU appuyer sur A pour passer en mode Automatique");
+                    Scanner sc = new Scanner(System.in);
+                    String next = sc.nextLine();
+                    if (next.equals("A") || next.equals("a")) {
+                        modeAutomatique = true;
+                    }
+                }
                 continue;
             }
 
@@ -55,6 +72,5 @@ public class Main {
                 System.err.println(message);
             }
         }
-        ActiveMQSubscriber.close();
     }
 }

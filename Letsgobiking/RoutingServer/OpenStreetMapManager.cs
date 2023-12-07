@@ -26,11 +26,18 @@ namespace RoutingServer
             JsonElement coordinates = document.RootElement.GetProperty("features")[0].GetProperty("geometry").GetProperty("coordinates");
             return coordinates[0] + "," + coordinates[1];
         }
+
+        public static void setNbEtapesTo0()
+        {
+            numeroEtapeActuel = 0;
+        }
+
         //trouve les coordonées des points et calcul l'itinéraire global
         public static async Task<List<string>> ComputeItineraire(string start, string end)
         {
             // En train de faire l'itinéraire
-            if (numeroEtapeActuel != 0 && start == "" && end == "") {
+            Console.WriteLine(numeroEtapeActuel);
+            if (numeroEtapeActuel != 0 && start == "InProcess" && end == "InProcess") {
                 ComputeItineraireEtapeAsync(start, end);
                 return new List<string>();
             }
@@ -39,9 +46,18 @@ namespace RoutingServer
             if (numeroEtapeActuel != 0) {
                 ReinitialiseVariable();
             }
-
-            start = await convertAddressToPointAsync(start);
-            end = await convertAddressToPointAsync(end);
+            try
+            {
+                start = await convertAddressToPointAsync(start);
+                end = await convertAddressToPointAsync(end);
+            }
+            catch (Exception ex)
+            {
+                Console.WriteLine($"Check your inputs: {ex.Message}");
+                List<string> listError = new List<string>();
+                listError.Add("Error, check your inputs");
+                return listError;
+            }
             List<string> list = await ComputeItineraireGlobal(start, end);
             SendSteps(10);
             return list;        
@@ -191,6 +207,11 @@ namespace RoutingServer
             }
             else if (list.Count < nombreMessage) {
                 list.Add("FINI");
+                ReinitialiseVariable();
+            }
+
+            if(numeroEtapeActuel >= tailleItineraire)
+            {
                 ReinitialiseVariable();
             }
 
