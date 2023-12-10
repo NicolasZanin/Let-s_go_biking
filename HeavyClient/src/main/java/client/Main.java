@@ -17,21 +17,19 @@ public class Main {
             System.out.println("Where do you want to go?");
             String end = sc.nextLine();
             System.out.println("Recherche d'itinéraire en cours...");
-            ArrayOfstring itineraires = service.computeItineraire(start, end);
+            try {
+                ArrayOfstring itineraires = service.computeItineraire(start, end);
+
 
             if (itineraires.getString().get(0).equals("Error, check your inputs")) {
                 System.out.println("Votre recherche n'a pas abouti, veuillez vérifier vos entrées.");
                 continue;
             }
-            try {
-                List<String> itinerairesList = itineraires.getString();
-                ItineraireViewer itineraireViewer = new ItineraireViewer();
-                itineraireViewer.showItineraire(itinerairesList);
-            }
-            catch (Exception e){
-                System.out.println("An error occured, please try again");
-                continue;
-            }
+
+            List<String> itinerairesList = itineraires.getString();
+            ItineraireViewer itineraireViewer = new ItineraireViewer();
+            itineraireViewer.showItineraire(itinerairesList);
+
 
             if (ActiveMQSubscriber.isStart()) {
                 boucleLecture(service);
@@ -44,6 +42,9 @@ public class Main {
 
                 for (String itineraire : newItineraires.getString())
                     System.out.println(itineraire);
+            }
+            }catch (Exception e){
+                System.out.println("An error occured,It seems that too many calls have been made to openRouteService, so wait a bit and please try again");
             }
         }
     }

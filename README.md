@@ -15,6 +15,9 @@ Projet mdwsoc Let's go biking
 - Dans la console Java, vous pouvez appuyer sur Entrée pour avoir les étapes suivantes
   Ou appuyer sur A pour son mode automatique
 
+Attention : si un beaucoup de requêtes sont réalisé à la suite, une erreur peut subvenir, en effet OpenRouteService bloquera les appel API
+Il faut donc juste attendre un peur, redémarrer el main et enjoy !
+
 Pour mettre une addresse de départ ou d'arrivé, la forme général est: `2400 routes des dolines, 06560 Valbonne`
 Mais fonctionne aussi de cette façon `2400 routes des dolines`
 Ou même `Valbonne`
