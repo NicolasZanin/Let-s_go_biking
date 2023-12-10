@@ -13,12 +13,13 @@ import org.jxmapviewer.painter.Painter;
  */
 public class SelectionPainter implements Painter<Object>
 {
-    private Color fillColor = new Color(128, 192, 255, 128);
-    private Color frameColor = new Color(0, 0, 255, 128);
+    private final Color fillColor = new Color(128, 192, 255, 128);
+    private final Color frameColor = new Color(0, 0, 255, 128);
 
-    private SelectionAdapter adapter;
+    private final SelectionAdapter adapter;
 
     /**
+     * Constructeur par défaut
      * @param adapter the selection adapter
      */
     public SelectionPainter(SelectionAdapter adapter)
@@ -27,12 +28,10 @@ public class SelectionPainter implements Painter<Object>
     }
 
     @Override
-    public void paint(Graphics2D g, Object t, int width, int height)
-    {
+    public void paint(Graphics2D g, Object t, int width, int height)  {
         Rectangle rc = adapter.getRectangle();
 
-        if (rc != null)
-        {
+        if (rc != null)  {
             g.setColor(frameColor);
             g.draw(rc);
             g.setColor(fillColor);

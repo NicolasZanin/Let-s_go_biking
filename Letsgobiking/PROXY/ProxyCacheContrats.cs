@@ -11,19 +11,19 @@ namespace PROXY {
         static readonly HttpClient client = new HttpClient();
         private static MemoryCache cache = MemoryCache.Default;
         private static DateTimeOffset dt_default = ObjectCache.InfiniteAbsoluteExpiration;
-        private static List<String> nomsContrat = new List<string>();
-        private static String apiKeyJCDecaux = "0d238e8d9993c554ac2e5a7ce158e357f8457dbe";
+        private static List<string> nomsContrat = new List<string>();
+        private static string apiKeyJCDecaux = "0d238e8d9993c554ac2e5a7ce158e357f8457dbe";
 
         //recupére une station par contrat
         internal static List<Station> GetOneStationForAllContrat()
         {
             List<Station> res = new List<Station>();
-            foreach (String contrat in nomsContrat)
+            foreach (string contrat in nomsContrat)
             {
-                Contrat toadd = Get(contrat);
-                if (toadd.getStations().Count > 0)
+                Contrat contratToAdd = Get(contrat);
+                if (contratToAdd.getStations().Count > 0)
                 {
-                    res.Add(toadd.getStations()[0]);
+                    res.Add(contratToAdd.getStations()[0]);
                 }
             }
             return res;
@@ -38,15 +38,16 @@ namespace PROXY {
                 HttpResponseMessage response = response2.Result;
                 response.EnsureSuccessStatusCode();
                 Task<string> responseBody = response.Content.ReadAsStringAsync();
-                JsonDocument document = JsonDocument.Parse(responseBody.Result);
+                JsonDocument jsonResponseBody = JsonDocument.Parse(responseBody.Result);
 
-                foreach (JsonElement item in document.RootElement.EnumerateArray())
+                foreach (JsonElement item in jsonResponseBody.RootElement.EnumerateArray())
                 {
                     string nameContrat = item.GetProperty("name").GetString();
                     nomsContrat.Add(nameContrat);
+                    
                     string country_code = item.GetProperty("country_code").GetString();
                     Contrat contrat = new Contrat(nameContrat);
-                    ;
+                    
                     cache.Set(nameContrat, contrat, dt_default);
                 }
             }

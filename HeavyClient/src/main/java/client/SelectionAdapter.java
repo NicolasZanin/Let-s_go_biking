@@ -16,54 +16,44 @@ import org.jxmapviewer.JXMapViewer;
 public class SelectionAdapter extends MouseAdapter 
 {
     private boolean dragging;
-    private JXMapViewer viewer;
+    private final JXMapViewer viewer;
 
-    private Point2D startPos = new Point2D.Double();
-    private Point2D endPos = new Point2D.Double();
+    private final Point2D startPos = new Point2D.Double();
+    private final Point2D endPos = new Point2D.Double();
 
     /**
+     * Constructeur par défaut
      * @param viewer the jxmapviewer
      */
-    public SelectionAdapter(JXMapViewer viewer)
-    {
+    public SelectionAdapter(JXMapViewer viewer) {
         this.viewer = viewer;
     }
 
     @Override
-    public void mousePressed(MouseEvent e)
-    {
-        if (e.getButton() != MouseEvent.BUTTON3)
+    public void mousePressed(MouseEvent mouseEvent) {
+        if (mouseEvent.getButton() != MouseEvent.BUTTON3)
             return;
 
-        startPos.setLocation(e.getX(), e.getY());
-        endPos.setLocation(e.getX(), e.getY());
+        startPos.setLocation(mouseEvent.getX(), mouseEvent.getY());
+        endPos.setLocation(mouseEvent.getX(), mouseEvent.getY());
 
         dragging = true;
     }
 
     @Override
-    public void mouseDragged(MouseEvent e)
-    {
-        if (!dragging)
-            return;
-
-        endPos.setLocation(e.getX(), e.getY());
-
-        viewer.repaint();
+    public void mouseDragged(MouseEvent mouseEvent)  {
+        if (dragging) {
+            endPos.setLocation(mouseEvent.getX(), mouseEvent.getY());
+            viewer.repaint();
+        }
     }
 
     @Override
-    public void mouseReleased(MouseEvent e)
-    {
-        if (!dragging)
-            return;
-
-        if (e.getButton() != MouseEvent.BUTTON3)
-            return;
-
-        viewer.repaint();
-
-        dragging = false;
+    public void mouseReleased(MouseEvent mouseEvent) {
+        if (dragging && mouseEvent.getButton() == MouseEvent.BUTTON3) {
+            viewer.repaint();
+            dragging = false;
+        }
     }
 
     /**
@@ -71,8 +61,7 @@ public class SelectionAdapter extends MouseAdapter
      */
     public Rectangle getRectangle()
     {
-        if (dragging)
-        {
+        if (dragging) {
             int x1 = (int) Math.min(startPos.getX(), endPos.getX());
             int y1 = (int) Math.min(startPos.getY(), endPos.getY());
             int x2 = (int) Math.max(startPos.getX(), endPos.getX());

@@ -10,12 +10,7 @@ namespace TPREST
     public class ProxyCacheVelos
     {
         private static MemoryCache cache;
-        private static String apiKeyJCDecaux = "0d238e8d9993c554ac2e5a7ce158e357f8457dbe";
-
-        public ProxyCacheVelos()
-        {
-
-        }
+        private static string apiKeyJCDecaux = "0d238e8d9993c554ac2e5a7ce158e357f8457dbe";
 
         public static void Init() {
             cache = MemoryCache.Default;
@@ -25,6 +20,7 @@ namespace TPREST
         public static async Task<int> GetNombreVelos(string stationNumber, string nameContract)
         {
             stationAvailabilities objNombreVelo = (stationAvailabilities)cache.Get(stationNumber);
+            
             if (objNombreVelo == null)
             {
                 stationAvailabilities availabilities = await setNewElement(stationNumber, nameContract, 2);
@@ -38,17 +34,12 @@ namespace TPREST
         public static async Task<int> GetPlaceVelos(string stationNumber, string nameContract)
         {
 
-            stationAvailabilities objPlaceVelo = (stationAvailabilities)cache.Get(stationNumber);
+            stationAvailabilities stationPlaceVelo = (stationAvailabilities) cache.Get(stationNumber);
 
-            if (objPlaceVelo == null)
-            {
+            if (stationPlaceVelo == null)
+                stationPlaceVelo = await setNewElement(stationNumber, nameContract, 2);
 
-                stationAvailabilities availabilities = await setNewElement(stationNumber, nameContract, 2);
-
-                return availabilities.getPlace();
-            }
-
-            return objPlaceVelo.getPlace();
+            return stationPlaceVelo.getPlace();
         }
 
         //insère les infos d'une stations dans le cache
@@ -58,18 +49,21 @@ namespace TPREST
             {
                 HttpResponseMessage response = await client.GetAsync("https://api.jcdecaux.com/vls/v3/stations/" + stationNumber + "?contract=" + nameContract + "&apiKey=" + apiKeyJCDecaux);
                 response.EnsureSuccessStatusCode();
+                
                 Task<string> responseBody = response.Content.ReadAsStringAsync();
-                JsonDocument document = JsonDocument.Parse(responseBody.Result);
-                JsonElement jsonBikes = document.RootElement.GetProperty("totalStands").GetProperty("availabilities").GetProperty("bikes");
-                JsonElement jsonPlace = document.RootElement.GetProperty("totalStands").GetProperty("availabilities").GetProperty("stands");
+                JsonDocument jsonResponseBody = JsonDocument.Parse(responseBody.Result);
+                
+                JsonElement jsonBikes = jsonResponseBody.RootElement.GetProperty("totalStands").GetProperty("availabilities").GetProperty("bikes");
+                JsonElement jsonPlace = jsonResponseBody.RootElement.GetProperty("totalStands").GetProperty("availabilities").GetProperty("stands");
                 int nombreVelo = jsonBikes.GetInt32();
                 int nombrePlace = jsonPlace.GetInt32();
-                stationAvailabilities toAdd = new stationAvailabilities(nombreVelo, nombrePlace);
+                stationAvailabilities stationToAdd = new stationAvailabilities(nombreVelo, nombrePlace);
+                
                 DateTime date = DateTime.Now;
                 date = date.AddMinutes(minuteTime);
-                cache.Set(stationNumber, toAdd, date);
+                cache.Set(stationNumber, stationToAdd, date);
 
-                return toAdd;
+                return stationToAdd;
             }
         }
     }

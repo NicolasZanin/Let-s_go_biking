@@ -10,21 +10,21 @@ namespace ActiveMQProducer {
         private static IDestination destinationProducer;
         private static bool isLogin = true;
 
-        static void Main(String[] args){
+        static void Main(string[] args){
 
         }
 
         /// <summary> Cette méthode initialise ActiveMQ </summary>
         private static void initProducer() {
-            Uri connecturi = new Uri("activemq:tcp://localhost:61616");
+            Uri uriActiveMQ = new Uri("activemq:tcp://localhost:61616");
 
             // Create a Connection Factory
-            ConnectionFactory connectionFactory = new ConnectionFactory(connecturi);
+            ConnectionFactory connectionFactoryActiveMQ = new ConnectionFactory(uriActiveMQ);
 
             // Create a single Connection from the Connection Factory.
             try
             {
-                connectionProducer = connectionFactory.CreateConnection();
+                connectionProducer = connectionFactoryActiveMQ.CreateConnection();
                 connectionProducer.Start();
 
                 // Create a session from the Connection.
@@ -33,13 +33,15 @@ namespace ActiveMQProducer {
                 // Use the session to target a queue.
                 destinationProducer = sessionProducer.GetQueue("itineraireQueue");
             }
-            catch (Exception e) {
+            // Si la connection n'a pas pu s'établir
+            catch (Exception) {
                 isLogin = false;
             }
         }
 
         /// <summary> Envoie des message à la Queue de ActiveMQ </summary>
-        public static void envoyerMessage(params String[] messages) {
+        public static void envoyerMessage(params string[] messages) {
+            // Si l'activeMq n'est pas initialisé
             if (connectionProducer == null)
                 initProducer();
 
@@ -58,6 +60,7 @@ namespace ActiveMQProducer {
         /// <summary> Vérifie si c'est connecter </summary>
         /// <returns><code>true</code> si le serveur activemq est connecter</returns>
         public static bool estConnecter() {
+            // Si l'activeMq n'est pas initialisé
             if (connectionProducer == null)
                 initProducer();
 
@@ -66,8 +69,10 @@ namespace ActiveMQProducer {
 
         /// <summary> Cette méthode ferme la connection vers ActiveMQ </summary>
         public static void close() {
-            connectionProducer.Close();
-            sessionProducer.Close();
+            if (estConnecter()) {
+                connectionProducer.Close();
+                sessionProducer.Close();
+            }
         }
     }
 }
