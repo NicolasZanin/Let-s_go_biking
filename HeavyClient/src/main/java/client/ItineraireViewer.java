@@ -1,4 +1,4 @@
-package t;
+package client;
 
 import org.json.JSONArray;
 import org.jxmapviewer.JXMapViewer;
@@ -11,14 +11,8 @@ import java.awt.*;
 import java.io.File;
 import java.util.*;
 import javax.swing.JFrame;
-import org.jxmapviewer.viewer.DefaultTileFactory;
-import org.jxmapviewer.viewer.GeoPosition;
-import org.jxmapviewer.viewer.TileFactoryInfo;
-import org.jxmapviewer.viewer.DefaultWaypoint;
-import org.jxmapviewer.viewer.Waypoint;
-import org.jxmapviewer.viewer.WaypointPainter;
+import org.jxmapviewer.viewer.*;
 
-import java.beans.PropertyChangeListener;
 import javax.swing.JLabel;
 import javax.swing.WindowConstants;
 import org.jxmapviewer.cache.FileBasedLocalCache;
@@ -30,7 +24,17 @@ import java.util.HashSet;
 import java.util.List;
 import java.util.Set;
 
+/**
+ * Permet de tracer un itinéraire sur une carte
+ */
 public class ItineraireViewer {
+
+    /**
+     * Constructeur par défaut qui ne doit pas être utilisé
+     */
+    private ItineraireViewer() {
+        throw new IllegalArgumentException("Utility Class");
+    }
 
     // Create a track from the coordinates
     public static List<GeoPosition> createTrack(JSONArray itineraire) {
@@ -45,6 +49,10 @@ public class ItineraireViewer {
         return track;
     }
 
+    /**
+     * Affiche l'itinéraire sur une carte
+     * @param itineraires les points de coordonnées de l'itinéraire à afficher
+     */
     public static void showItineraire(List<String> itineraires) {
         // Create a TileFactoryInfo for OpenStreetMap
         TileFactoryInfo info = new OSMTileFactoryInfo();
@@ -148,7 +156,7 @@ public class ItineraireViewer {
         double lon = mapViewer.getCenterPosition().getLongitude();
         int zoom = mapViewer.getZoom();
 
-        frame.setTitle(String.format("Let's Go Biking ! (%.2f / %.2f) - RED=foot BLUE=bike", lat, lon, zoom));
+        frame.setTitle(String.format("Let's Go Biking ! (%.2f / %.2f) - RED=foot BLUE=bike, zoom = %d", lat, lon, zoom));
     }
 
 

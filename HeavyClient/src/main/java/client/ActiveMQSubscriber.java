@@ -1,4 +1,4 @@
-package t;
+package client;
 
 import javax.jms.*;
 import org.apache.activemq.ActiveMQConnectionFactory;
@@ -20,7 +20,6 @@ public class ActiveMQSubscriber {
 
     /**
      * Effectue la connection vers activeMQ
-     * @throws JMSException l'exception JMS
      */
     private static void initActiveMQSubscriber() {
         ActiveMQConnectionFactory factory = new ActiveMQConnectionFactory("tcp://localhost:61616");
@@ -28,6 +27,7 @@ public class ActiveMQSubscriber {
             connectionActiveMQ = factory.createConnection();
             connectionActiveMQ.start();
 
+            // false =  session pas transactionnelle et AUTO_ACKNOWLEDGE = le client reconnait automatiquement les messages
             Session session = connectionActiveMQ.createSession(false, Session.AUTO_ACKNOWLEDGE);
 
             Destination destination = session.createQueue("itineraireQueue");
@@ -56,7 +56,7 @@ public class ActiveMQSubscriber {
         if (receivedMessage instanceof TextMessage textMessage)
             return textMessage.getText();
         else
-            return  receivedMessage.toString();
+            return receivedMessage.toString();
     }
 
     /**
@@ -75,7 +75,9 @@ public class ActiveMQSubscriber {
      * @throws JMSException l'exception JMS
      */
     public static void close() throws JMSException {
-        // Fermer la connexion
-        connectionActiveMQ.close();
+        if (isStart()) {
+            // Fermer la connexion
+            connectionActiveMQ.close();
+        }
     }
 }

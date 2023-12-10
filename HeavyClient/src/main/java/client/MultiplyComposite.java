@@ -1,13 +1,10 @@
 
-package t;
+package client;
 
 import java.awt.Composite;
 import java.awt.CompositeContext;
 import java.awt.RenderingHints;
-import java.awt.image.ColorModel;
-import java.awt.image.DataBuffer;
-import java.awt.image.Raster;
-import java.awt.image.WritableRaster;
+import java.awt.image.*;
 
 /**
  * Multiplies two images
@@ -60,13 +57,13 @@ public class MultiplyComposite implements Composite
                         int pixel = srcPixels[x];
                         srcPixel[0] = (pixel >> 16) & 0xFF;
                         srcPixel[1] = (pixel >>  8) & 0xFF;
-                        srcPixel[2] = (pixel >>  0) & 0xFF;
+                        srcPixel[2] = (pixel) & 0xFF;
                         srcPixel[3] = (pixel >> 24) & 0xFF;
 
                         pixel = dstPixels[x];
                         dstPixel[0] = (pixel >> 16) & 0xFF;
                         dstPixel[1] = (pixel >>  8) & 0xFF;
-                        dstPixel[2] = (pixel >>  0) & 0xFF;
+                        dstPixel[2] = (pixel) & 0xFF;
                         dstPixel[3] = (pixel >> 24) & 0xFF;
 
                         int[] result = new int[] 

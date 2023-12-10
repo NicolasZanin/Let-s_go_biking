@@ -1,5 +1,5 @@
 
-package t;
+package client;
 
 import java.awt.BasicStroke;
 import java.awt.Color;
@@ -20,10 +20,9 @@ import org.jxmapviewer.painter.Painter;
  */
 public class RoutePainter implements Painter<JXMapViewer>
 {
-    private Color color;
-    private boolean antiAlias = true;
+    private final Color color;
 
-    private List<GeoPosition> track;
+    private final List<GeoPosition> track;
 
     /**
      * @param track the track
@@ -32,7 +31,8 @@ public class RoutePainter implements Painter<JXMapViewer>
     {
         // copy the list so that changes in the
         // original list do not have an effect here
-        this.track = new ArrayList<GeoPosition>(track);
+        this.track = new ArrayList<>(track);
+
         if(color.equals("RED")){
             this.color = Color.RED;
         }
@@ -53,8 +53,8 @@ public class RoutePainter implements Painter<JXMapViewer>
         Rectangle rect = map.getViewportBounds();
         g.translate(-rect.x, -rect.y);
 
-        if (antiAlias)
-            g.setRenderingHint(RenderingHints.KEY_ANTIALIASING, RenderingHints.VALUE_ANTIALIAS_ON);
+
+        g.setRenderingHint(RenderingHints.KEY_ANTIALIASING, RenderingHints.VALUE_ANTIALIAS_ON);
 
         // do the drawing
         g.setColor(Color.BLACK);
@@ -79,25 +79,21 @@ public class RoutePainter implements Painter<JXMapViewer>
     {
         int lastX = 0;
         int lastY = 0;
-
         boolean first = true;
 
-        for (GeoPosition gp : track)
-        {
+        for (GeoPosition gp : track) {
             // convert geo-coordinate to world bitmap pixel
-            Point2D pt = map.getTileFactory().geoToPixel(gp, map.getZoom());
+            Point2D point = map.getTileFactory().geoToPixel(gp, map.getZoom());
 
-            if (first)
-            {
+            if (first) {
                 first = false;
             }
-            else
-            {
-                g.drawLine(lastX, lastY, (int) pt.getX(), (int) pt.getY());
+            else  {
+                g.drawLine(lastX, lastY, (int) point.getX(), (int) point.getY());
             }
 
-            lastX = (int) pt.getX();
-            lastY = (int) pt.getY();
+            lastX = (int) point.getX();
+            lastY = (int) point.getY();
         }
     }
 }

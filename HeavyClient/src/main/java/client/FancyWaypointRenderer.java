@@ -7,7 +7,7 @@
  * and open the template in the editor.
  */
 
-package t;
+package client;
 
 import java.awt.Color;
 import java.awt.FontMetrics;
@@ -33,22 +33,20 @@ public class FancyWaypointRenderer implements WaypointRenderer<MyWaypoint>
 {
     private static final Log log = LogFactory.getLog(FancyWaypointRenderer.class);
 
-    private final Map<Color, BufferedImage> map = new HashMap<Color, BufferedImage>();
-
-//    private final Font font = new Font("Lucida Sans", Font.BOLD, 10);
+    private final Map<Color, BufferedImage> map = new HashMap<>();
 
     private BufferedImage origImage;
 
     /**
      * Uses a default waypoint image
      */
-    public FancyWaypointRenderer()
-    {
+    public FancyWaypointRenderer() {
         URL resource = getClass().getResource("waypoint_white.png");
 
         try
         {
-            origImage = ImageIO.read(resource);
+            if (resource != null)
+                origImage = ImageIO.read(resource);
         }
         catch (Exception ex)
         {
@@ -102,13 +100,11 @@ public class FancyWaypointRenderer implements WaypointRenderer<MyWaypoint>
 
         String label = w.getLabel();
 
-//        g.setFont(font);
 
         FontMetrics metrics = g.getFontMetrics();
         int tw = metrics.stringWidth(label);
         int th = 1 + metrics.getAscent();
 
-//        g.setRenderingHint(RenderingHints.KEY_ANTIALIASING, RenderingHints.VALUE_ANTIALIAS_ON);
         g.drawString(label, x - tw / 2, y + th - myImg.getHeight());
 
         g.dispose();
