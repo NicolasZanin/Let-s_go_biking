@@ -8,10 +8,10 @@ namespace RoutingServer {
     class HostRoutingServer  {
 
         static async Task Main(string[] args) {
-            Uri httpUrl = new Uri("http://localhost:8091/IServiceRoutingServer/ServiceRoutingServer");
+            Uri httpUrlRoutingServer = new Uri("http://localhost:8091/IServiceRoutingServer/ServiceRoutingServer");
             
             //Create ServiceHost
-            ServiceHost host = new ServiceHost(typeof(ServiceRoutingServer), httpUrl);
+            ServiceHost host = new ServiceHost(typeof(ServiceRoutingServer), httpUrlRoutingServer);
 
             //Add a service endpoint
             host.AddServiceEndpoint(typeof(IServiceRoutingServer), new BasicHttpBinding(), "");
@@ -22,7 +22,7 @@ namespace RoutingServer {
                 smb.HttpGetEnabled = true;
                 host.Description.Behaviors.Add(smb);
             }
-            catch (Exception ex)  {} // Si les métadonnées sont déjà activé
+            catch (Exception)  {} // Si les métadonnées sont déjà activé
 
             //Start the Service
             host.Open();

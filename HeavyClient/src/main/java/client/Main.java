@@ -40,7 +40,9 @@ public class Main {
                     if (ActiveMQSubscriber.isStart()) {
                         boucleLecture(service);
                         String message = ActiveMQSubscriber.recevoirMessage();
+
                         while (message != null) {
+                            transformMessage(message);
                             message = ActiveMQSubscriber.recevoirMessage();
                         }
                     }
@@ -125,14 +127,23 @@ public class Main {
             }
 
             else {
-                try {
-                    JSONObject jsonObject = new JSONObject(message);
-                    String instruction = jsonObject.getString("instruction");
-                    log.info(instruction);
-                } catch (JSONException jsonException) {
-                    log.severe(jsonException.getMessage());
-                }
+                transformMessage(message);
             }
+        }
+    }
+
+
+    /**
+     * Transforme le json en string et affiche l'instruction
+     * @param message le json à transformer
+     */
+    private static void transformMessage(String message) {
+        try {
+            JSONObject jsonObject = new JSONObject(message);
+            String instruction = jsonObject.getString("instruction");
+            log.info(instruction);
+        } catch (JSONException jsonException) {
+            log.severe(jsonException.getMessage());
         }
     }
 }

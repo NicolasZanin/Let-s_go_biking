@@ -8,7 +8,7 @@ namespace RoutingServer {
     [ServiceContract()]
     public interface IServiceRoutingServer{
         [OperationContract()]
-        Task<List<String>> ComputeItineraireAsync(string start, string end);
+        Task<List<string>> ComputeItineraireAsync(string start, string end);
 
     }
 }

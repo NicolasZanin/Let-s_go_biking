@@ -47,7 +47,7 @@ namespace PROXY
                     string address = elementJsonStation.GetProperty("address").GetString();
                     Position positionStation = new Position(longitude, latitude);
 
-                    stations.Add(new Station(numeroStation, nameContract, nameStation, address, positionStation, numberTotalStands););
+                    stations.Add(new Station(numeroStation, nameContract, nameStation, address, positionStation, numberTotalStands));
                 }
                 return stations;
             }

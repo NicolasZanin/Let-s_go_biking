@@ -75,11 +75,13 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="CalculStation.cs" />
     <Compile Include="Connected Services\ProxyService\Reference.cs">
       <AutoGen>True</AutoGen>
       <DesignTime>True</DesignTime>
       <DependentUpon>Reference.svcmap</DependentUpon>
     </Compile>
+    <Compile Include="InformationStation.cs" />
     <Compile Include="Itineraire.cs" />
     <Compile Include="OpenStreetMapManager.cs" />
     <Compile Include="HostRoutingServer.cs" />
