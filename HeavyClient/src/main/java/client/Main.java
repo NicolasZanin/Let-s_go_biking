@@ -10,7 +10,7 @@ public class Main {
     private static final String IN_PROCESS = "InProcess";
     private static final Logger log = Logger.getLogger("Main");
 
-    public static void main(String[] args) throws JMSException, InterruptedException {
+    public static void main(String[] args) throws JMSException {
         ServiceRoutingServer serviceRoutingServer = new ServiceRoutingServer();
         IServiceRoutingServer service = serviceRoutingServer.getBasicHttpBindingIServiceRoutingServer();
 
@@ -26,25 +26,38 @@ public class Main {
             log.info("Recherche d'itinéraire en cours...");
             ArrayOfstring itineraires = service.computeItineraire(start, end);
 
-            if (itineraires.getString().get(0).equals("Error, check your inputs"))
-                log.info("Votre recherche n'a pas abouti, veuillez vérifier vos entrées.");
+            if (itineraires.getString().get(0).equals("Error, check your inputs")) {
+                log.severe("Votre recherche n'a pas abouti, veuillez vérifier vos entrées.");
+            }
+
             else {
+                try {
 
-                List<String> itinerairesList = itineraires.getString();
-                ItineraireViewer.showItineraire(itinerairesList);
+                    List<String> itinerairesList = itineraires.getString();
+                    ItineraireViewer.showItineraire(itinerairesList);
 
-                // Si le serveur ActiveMQ est démarré alors on lis sur active MQ
-                if (ActiveMQSubscriber.isStart())
-                    boucleLecture(service);
+                    // Si le serveur ActiveMQ est démarré alors on lis sur active MQ
+                    if (ActiveMQSubscriber.isStart()) {
+                        boucleLecture(service);
+                        String message = ActiveMQSubscriber.recevoirMessage();
+                        while (message != null) {
+                            message = ActiveMQSubscriber.recevoirMessage();
+                        }
+                    }
 
                     // Sinon on récupère tout l'itinéraire
-                else {
-                    ArrayOfstring newItineraires = service.computeItineraire(IN_PROCESS, IN_PROCESS);
+                    else {
+                        ArrayOfstring newItineraires = service.computeItineraire(IN_PROCESS, IN_PROCESS);
 
-                    for (String itineraire : newItineraires.getString())
-                        log.info(itineraire);
+                        for (String itineraire : newItineraires.getString())
+                            log.info(itineraire);
+                    }
+
+                    break;
                 }
-                break;
+                catch (Exception e){
+                    log.severe("An error occured, please try again");
+                }
             }
         }
 
@@ -85,8 +98,15 @@ public class Main {
                 else{
                     log.info("Appuyer sur Entrée pour continuer...");
                     log.info("OU appuyer sur A pour passer en mode Automatique");
+                    log.info("OU appuyer sur E pour arrêter");
+
                     Scanner sc = new Scanner(System.in);
                     String next = sc.nextLine();
+
+                    if (next.equalsIgnoreCase("e")) {
+                        break;
+                    }
+
                     if (next.equalsIgnoreCase("a")) {
                         modeAutomatique = true;
                     }
@@ -94,11 +114,12 @@ public class Main {
             }
 
             // Si le message commence par f pour 'fini velo' ou V pour 'Vélo'
-            else if (message.startsWith("f") || message.startsWith("V"))
+            else if (message.startsWith("f") || message.startsWith("V")) {
                 log.info(message);
+            }
 
             // Si le message commence par F pour 'Fini'
-            else if (message.startsWith("F")) {
+            else if (message.contains("FINI")) {
                 log.info(message);
                 break;
             }
@@ -109,7 +130,7 @@ public class Main {
                     String instruction = jsonObject.getString("instruction");
                     log.info(instruction);
                 } catch (JSONException jsonException) {
-                    log.log(Level.WARNING, jsonException.getMessage());
+                    log.severe(jsonException.getMessage());
                 }
             }
         }
