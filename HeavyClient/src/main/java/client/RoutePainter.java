@@ -1,5 +1,5 @@
 
-package t;
+package client;
 
 import java.awt.BasicStroke;
 import java.awt.Color;

@@ -1,4 +1,4 @@
-package t;
+package client;
 
 import javax.jms.*;
 import org.apache.activemq.ActiveMQConnectionFactory;

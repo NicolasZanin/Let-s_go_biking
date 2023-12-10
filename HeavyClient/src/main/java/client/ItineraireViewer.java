@@ -1,4 +1,4 @@
-package t;
+package client;
 
 import org.json.JSONArray;
 import org.jxmapviewer.JXMapViewer;
@@ -18,7 +18,6 @@ import org.jxmapviewer.viewer.DefaultWaypoint;
 import org.jxmapviewer.viewer.Waypoint;
 import org.jxmapviewer.viewer.WaypointPainter;
 
-import java.beans.PropertyChangeListener;
 import javax.swing.JLabel;
 import javax.swing.WindowConstants;
 import org.jxmapviewer.cache.FileBasedLocalCache;

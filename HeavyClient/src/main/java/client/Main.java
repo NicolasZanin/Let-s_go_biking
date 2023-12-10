@@ -1,4 +1,4 @@
-package t;
+package client;
 import org.json.JSONObject;
 import ws.client.generated.*;
 import java.util.*;
@@ -23,20 +23,28 @@ public class Main {
                 System.out.println("Votre recherche n'a pas abouti, veuillez vérifier vos entrées.");
                 continue;
             }
+            try {
+                List<String> itinerairesList = itineraires.getString();
+                ItineraireViewer itineraireViewer = new ItineraireViewer();
+                itineraireViewer.showItineraire(itinerairesList);
+            }
+            catch (Exception e){
+                System.out.println("An error occured, please try again");
+                continue;
+            }
 
-            List<String> itinerairesList = itineraires.getString();
-            ItineraireViewer itineraireViewer = new ItineraireViewer();
-            itineraireViewer.showItineraire(itinerairesList);
-
-            if (ActiveMQSubscriber.isStart())
+            if (ActiveMQSubscriber.isStart()) {
                 boucleLecture(service);
-            else {
+                String message = ActiveMQSubscriber.recevoirMessage();
+                while (message != null) {
+                    message = ActiveMQSubscriber.recevoirMessage();
+                }
+            }else {
                 ArrayOfstring newItineraires = service.computeItineraire("InProcess", "InProcess");
 
                 for (String itineraire : newItineraires.getString())
                     System.out.println(itineraire);
             }
-            break;
         }
     }
 
@@ -54,8 +62,13 @@ public class Main {
                 }else{
                     System.out.println("Appuyer sur Entrée pour continuer...");
                     System.out.println("OU appuyer sur A pour passer en mode Automatique");
+                    System.out.println("OU appuyer sur E pour arrêter");
+
                     Scanner sc = new Scanner(System.in);
                     String next = sc.nextLine();
+                    if (next.equals("E") || next.equals("e")) {
+                        break;
+                    }
                     if (next.equals("A") || next.equals("a")) {
                         modeAutomatique = true;
                     }
@@ -68,7 +81,7 @@ public class Main {
                 continue;
             }
 
-            else if (message.startsWith("F")) {
+            else if (message.contains("FINI")) {
                 System.out.println(message);
                 break;
             }
