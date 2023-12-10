@@ -42,7 +42,6 @@ public class Main {
                         String message = ActiveMQSubscriber.recevoirMessage();
 
                         while (message != null) {
-                            transformMessage(message);
                             message = ActiveMQSubscriber.recevoirMessage();
                         }
                     }
@@ -54,19 +53,11 @@ public class Main {
                         for (String itineraire : newItineraires.getString())
                             log.info(itineraire);
                     }
-
-                    break;
                 }
                 catch (Exception e){
-                    log.severe("An error occured, please try again");
-                }
-            }
-            }catch (Exception e){
-                System.out.println("An error occured,It seems that too many calls have been made to openRouteService, so wait a bit and please try again");
+                    log.severe("An error occured,It seems that too many calls have been made to openRouteService, so wait a bit and please try again");                }
             }
         }
-
-        ActiveMQSubscriber.close();
     }
 
     /**
@@ -89,8 +80,9 @@ public class Main {
     private static void boucleLecture(IServiceRoutingServer service) throws JMSException, InterruptedException {
         log.info("C'est parti !");
         boolean modeAutomatique = false;
+        boolean canContinue = true;
 
-        while (true) {
+        while (canContinue) {
             String message = ActiveMQSubscriber.recevoirMessage();
 
             if (message == null) {
@@ -107,9 +99,8 @@ public class Main {
 
                     Scanner sc = new Scanner(System.in);
                     String next = sc.nextLine();
-
                     if (next.equalsIgnoreCase("e")) {
-                        break;
+                        canContinue = false;
                     }
 
                     if (next.equalsIgnoreCase("a")) {
