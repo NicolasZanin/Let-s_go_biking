@@ -83,7 +83,7 @@ public class ItineraireViewer {
         frame.add(new JLabel(text), BorderLayout.NORTH);
         frame.add(mapViewer);
         frame.setSize(800, 600);
-        frame.setDefaultCloseOperation(WindowConstants.EXIT_ON_CLOSE);
+        frame.setDefaultCloseOperation(WindowConstants.DISPOSE_ON_CLOSE);
         frame.setVisible(true);
 
         // Create a track from the geo-positions
