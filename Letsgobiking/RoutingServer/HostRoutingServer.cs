@@ -30,7 +30,9 @@ namespace RoutingServer {
             Console.WriteLine("Host is running... Press <Enter> key to stop");
             Console.ReadLine();
             
-            Producer.close();
+            if (Producer.estConnecter())
+                Producer.close();
+
             host.Close();
         }
     }

@@ -10,6 +10,7 @@ namespace TPREST
     public class ProxyCacheVelos
     {
         private static MemoryCache cache;
+        private static String apiKeyJCDecaux = "0d238e8d9993c554ac2e5a7ce158e357f8457dbe";
 
         public ProxyCacheVelos()
         {
@@ -26,7 +27,7 @@ namespace TPREST
             stationAvailabilities objNombreVelo = (stationAvailabilities)cache.Get(stationNumber);
             if (objNombreVelo == null)
             {
-                stationAvailabilities availabilities = await setNewElement(stationNumber, nameContract);
+                stationAvailabilities availabilities = await setNewElement(stationNumber, nameContract, 2);
                 return availabilities.getVelo();
             }
 
@@ -42,7 +43,7 @@ namespace TPREST
             if (objPlaceVelo == null)
             {
 
-                stationAvailabilities availabilities = await setNewElement(stationNumber, nameContract);
+                stationAvailabilities availabilities = await setNewElement(stationNumber, nameContract, 2);
 
                 return availabilities.getPlace();
             }
@@ -51,11 +52,11 @@ namespace TPREST
         }
 
         //insère les infos d'une stations dans le cache
-        private static async Task<stationAvailabilities> setNewElement(string stationNumber, string nameContract)
+        private static async Task<stationAvailabilities> setNewElement(string stationNumber, string nameContract, int minuteTime)
         {
             using (var client = new HttpClient())
             {
-                HttpResponseMessage response = await client.GetAsync("https://api.jcdecaux.com/vls/v3/stations/" + stationNumber + "?contract=" + nameContract + "&apiKey=0d238e8d9993c554ac2e5a7ce158e357f8457dbe");
+                HttpResponseMessage response = await client.GetAsync("https://api.jcdecaux.com/vls/v3/stations/" + stationNumber + "?contract=" + nameContract + "&apiKey=" + apiKeyJCDecaux);
                 response.EnsureSuccessStatusCode();
                 Task<string> responseBody = response.Content.ReadAsStringAsync();
                 JsonDocument document = JsonDocument.Parse(responseBody.Result);
@@ -65,7 +66,7 @@ namespace TPREST
                 int nombrePlace = jsonPlace.GetInt32();
                 stationAvailabilities toAdd = new stationAvailabilities(nombreVelo, nombrePlace);
                 DateTime date = DateTime.Now;
-                date = date.AddMinutes(2);
+                date = date.AddMinutes(minuteTime);
                 cache.Set(stationNumber, toAdd, date);
 
                 return toAdd;

@@ -1,6 +1,8 @@
-﻿using RoutingServer.ProxyService;
+﻿using ActiveMQProducer;
+using RoutingServer.ProxyService;
 using System;
 using System.Collections.Generic;
+using System.Linq;
 using System.Net.Http;
 using System.Text.Json;
 using System.Threading.Tasks;
@@ -13,10 +15,11 @@ namespace RoutingServer
 
         private static List<Itineraire> itineraires = new List<Itineraire>();
         private static int numeroEtapeActuel = 0;
+        private static String apiKey = "5b3ce3597851110001cf6248ef43ce34eac546a6b118b6706bfe11ce";
 
         //convertit une adresse en coordonnes avec OpenROuteService
         public static async Task<string> convertAddressToPointAsync(string address) {
-            string apiURL = "https://api.openrouteservice.org/geocode/search?api_key=5b3ce3597851110001cf6248ef43ce34eac546a6b118b6706bfe11ce&text="+ address;
+            string apiURL = "https://api.openrouteservice.org/geocode/search?api_key=" + apiKey + "&text=" + address;
             //fait l'appel est récupère les coordonnées
             HttpClient OSMapi = new HttpClient();
             HttpResponseMessage response = await OSMapi.GetAsync(apiURL);
@@ -29,6 +32,17 @@ namespace RoutingServer
         //trouve les coordonées des points et calcul l'itinéraire global
         public static async Task<List<string>> ComputeItineraire(string start, string end)
         {
+            if (!Producer.estConnecter() && start == "" && end == "") {
+                List<string> liste = new List<string>();
+                
+                foreach (Itineraire itineraire in itineraires) {
+                    foreach (JsonElement morceauItineraire in itineraire.morceauItineraire)
+                        liste.Add(morceauItineraire.GetProperty("instruction").GetString());
+                }
+
+                return liste;
+            }
+
             // En train de faire l'itinéraire
             if (numeroEtapeActuel != 0 && start == "" && end == "") {
                 ComputeItineraireEtapeAsync(start, end);
@@ -43,7 +57,10 @@ namespace RoutingServer
             start = await convertAddressToPointAsync(start);
             end = await convertAddressToPointAsync(end);
             List<string> list = await ComputeItineraireGlobal(start, end);
-            SendSteps(10);
+
+            if (Producer.estConnecter())
+                SendSteps(10);
+
             return list;        
         }
 
@@ -235,7 +252,7 @@ namespace RoutingServer
         internal static async Task<Itineraire> getItineraireAsync(string coordinatesStart, string station1Coord, string locomotion, InformationStation info = null)
         {
             HttpClient OSMapi = new HttpClient();
-            string apiUrl = "https://api.openrouteservice.org/v2/directions/" + locomotion + "?api_key=5b3ce3597851110001cf6248ef43ce34eac546a6b118b6706bfe11ce&start=" + coordinatesStart + "&end=" + station1Coord;
+            string apiUrl = "https://api.openrouteservice.org/v2/directions/" + locomotion + "?api_key=" + apiKey + "&start=" + coordinatesStart + "&end=" + station1Coord;
             //Console.WriteLine(apiUrl);
             HttpResponseMessage response = await OSMapi.GetAsync(apiUrl);
             response.EnsureSuccessStatusCode();
@@ -247,7 +264,7 @@ namespace RoutingServer
         internal static async Task<double> getDistanceAsync(string coordinatesStart, string station1Coord, string locomotion)
         {
             HttpClient OSMapi = new HttpClient();
-            string apiUrl = "https://api.openrouteservice.org/v2/directions/" + locomotion + "?api_key=5b3ce3597851110001cf6248ef43ce34eac546a6b118b6706bfe11ce&start=" + coordinatesStart + "&end=" + station1Coord;
+            string apiUrl = "https://api.openrouteservice.org/v2/directions/" + locomotion + "?api_key=" + apiKey + "&start=" + coordinatesStart + "&end=" + station1Coord;
             //Console.WriteLine(apiUrl);
             HttpResponseMessage response = await OSMapi.GetAsync(apiUrl);
             response.EnsureSuccessStatusCode();

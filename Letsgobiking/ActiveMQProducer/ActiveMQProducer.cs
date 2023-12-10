@@ -8,6 +8,7 @@ namespace ActiveMQProducer {
         private static IConnection connectionProducer;
         private static ISession sessionProducer;
         private static IDestination destinationProducer;
+        private static bool isLogin = true;
 
         static void Main(String[] args){
 
@@ -21,14 +22,20 @@ namespace ActiveMQProducer {
             ConnectionFactory connectionFactory = new ConnectionFactory(connecturi);
 
             // Create a single Connection from the Connection Factory.
-            connectionProducer = connectionFactory.CreateConnection();
-            connectionProducer.Start();
+            try
+            {
+                connectionProducer = connectionFactory.CreateConnection();
+                connectionProducer.Start();
 
-            // Create a session from the Connection.
-            sessionProducer = connectionProducer.CreateSession();
+                // Create a session from the Connection.
+                sessionProducer = connectionProducer.CreateSession();
 
-            // Use the session to target a queue.
-            destinationProducer = sessionProducer.GetQueue("itineraireQueue");
+                // Use the session to target a queue.
+                destinationProducer = sessionProducer.GetQueue("itineraireQueue");
+            }
+            catch (Exception e) {
+                isLogin = false;
+            }
         }
 
         /// <summary> Envoie des message à la Queue de ActiveMQ </summary>
@@ -46,6 +53,15 @@ namespace ActiveMQProducer {
                 ITextMessage message = sessionProducer.CreateTextMessage(messages[i]);
                 producer.Send(message);
             }
+        }
+
+        /// <summary> Vérifie si c'est connecter </summary>
+        /// <returns><code>true</code> si le serveur activemq est connecter</returns>
+        public static bool estConnecter() {
+            if (connectionProducer == null)
+                initProducer();
+
+            return isLogin;
         }
 
         /// <summary> Cette méthode ferme la connection vers ActiveMQ </summary>

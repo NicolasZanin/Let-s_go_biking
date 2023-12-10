@@ -15,6 +15,9 @@ namespace PROXY
         [DataMember]
         public List<Station> stations;
 
+        [DataMember]
+        private static String apiKeyJCDecaux = "0d238e8d9993c554ac2e5a7ce158e357f8457dbe";
+
         // Constructor making a request to JCDecaux API to get stations for the contract
         public Contrat(string contractName)
         {
@@ -26,7 +29,7 @@ namespace PROXY
         {
             using (var client = new HttpClient())
             {
-                string apiUrl = "https://api.jcdecaux.com/vls/v3/stations?contract=" + name + "&apiKey=0d238e8d9993c554ac2e5a7ce158e357f8457dbe";
+                string apiUrl = "https://api.jcdecaux.com/vls/v3/stations?contract=" + name + "&apiKey=" + apiKeyJCDecaux;
                 HttpResponseMessage response = await client.GetAsync(apiUrl);
                 response.EnsureSuccessStatusCode();
                 string responseBody = await response.Content.ReadAsStringAsync();

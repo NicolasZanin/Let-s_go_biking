@@ -19,10 +19,16 @@ public class Main {
 
         ArrayOfstring itineraires = service.computeItineraire(start, end);
         List<String> itinerairesList = itineraires.getString();
-        ItineraireViewer itineraireViewer = new ItineraireViewer();
-        itineraireViewer.showItineraire(itinerairesList);
+        ItineraireViewer.showItineraire(itinerairesList);
 
-        boucleLecture(service);
+        if (ActiveMQSubscriber.isStart())
+            boucleLecture(service);
+        else {
+            ArrayOfstring newItineraires = service.computeItineraire("", "");
+
+            for (String itineraire : newItineraires.getString())
+                System.out.println(itineraire);
+        }
     }
 
     private static void boucleLecture(IServiceRoutingServer service) throws JMSException, InterruptedException {

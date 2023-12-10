@@ -1,5 +1,4 @@
 ﻿using System;
-using System.Collections;
 using System.Collections.Generic;
 using System.Net.Http;
 using System.Runtime.Caching;
@@ -13,6 +12,7 @@ namespace PROXY {
         private static MemoryCache cache = MemoryCache.Default;
         private static DateTimeOffset dt_default = ObjectCache.InfiniteAbsoluteExpiration;
         private static List<String> nomsContrat = new List<string>();
+        private static String apiKeyJCDecaux = "0d238e8d9993c554ac2e5a7ce158e357f8457dbe";
 
         //recupére une station par contrat
         internal static List<Station> GetOneStationForAllContrat()
@@ -34,7 +34,7 @@ namespace PROXY {
         {
             try
             {
-                Task<HttpResponseMessage> response2 = client.GetAsync("https://api.jcdecaux.com/vls/v3/contracts?apiKey=0d238e8d9993c554ac2e5a7ce158e357f8457dbe");
+                Task<HttpResponseMessage> response2 = client.GetAsync("https://api.jcdecaux.com/vls/v3/contracts?apiKey=" + apiKeyJCDecaux );
                 HttpResponseMessage response = response2.Result;
                 response.EnsureSuccessStatusCode();
                 Task<string> responseBody = response.Content.ReadAsStringAsync();

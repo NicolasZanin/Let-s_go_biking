@@ -9,6 +9,7 @@ import org.apache.activemq.ActiveMQConnectionFactory;
 public class ActiveMQSubscriber {
     private static Connection connectionActiveMQ;
     private static MessageConsumer messageConsumer;
+    private static boolean isStart = true;
 
     /**
      * Constructeur par défaut qui ne doit pas être utilisé
@@ -21,16 +22,21 @@ public class ActiveMQSubscriber {
      * Effectue la connection vers activeMQ
      * @throws JMSException l'exception JMS
      */
-    private static void initActiveMQSubscriber() throws JMSException {
+    private static void initActiveMQSubscriber() {
         ActiveMQConnectionFactory factory = new ActiveMQConnectionFactory("tcp://localhost:61616");
-        connectionActiveMQ = factory.createConnection();
-        connectionActiveMQ.start();
+        try {
+            connectionActiveMQ = factory.createConnection();
+            connectionActiveMQ.start();
 
-        Session session = connectionActiveMQ.createSession(false, Session.AUTO_ACKNOWLEDGE);
+            Session session = connectionActiveMQ.createSession(false, Session.AUTO_ACKNOWLEDGE);
 
-        Destination destination = session.createQueue("itineraireQueue");
-        // Créer un consommateur de messages
-        messageConsumer = session.createConsumer(destination);
+            Destination destination = session.createQueue("itineraireQueue");
+            // Créer un consommateur de messages
+            messageConsumer = session.createConsumer(destination);
+        }
+        catch (JMSException e) {
+            isStart = false;
+        }
     }
 
     /**
@@ -51,6 +57,17 @@ public class ActiveMQSubscriber {
             return textMessage.getText();
         else
             return  receivedMessage.toString();
+    }
+
+    /**
+     * Verifie si le serveur activeMq est démarré
+     * @return <code>true</code> si le serveur est démarré sinon <code>false</code>
+     */
+    public static boolean isStart() {
+        if (connectionActiveMQ == null)
+            initActiveMQSubscriber();
+
+        return isStart;
     }
 
     /**
